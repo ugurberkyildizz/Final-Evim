@@ -1,0 +1,13 @@
+.productlistimage{ width:45px; height:45px; border:2px solid #fff; box-shadow: 0 0 2px #999; }
+
+.aditionalsearchdiv button i{ margin-right:6px; }
+
+@media only screen and (max-width: 600px) {
+   
+    .filter-ngx.form-control{ width:50px;  }
+    .aditionalsearchdiv{right: 0; top:17px;}
+    .custom-datatable button{ padding-left: 5px; padding-right: 5px;}
+    .custom-datatable button i{ margin-right:0; }
+    .custom-datatable button span{ display:none; }
+    
+}

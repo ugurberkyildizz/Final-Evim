@@ -1,0 +1,26 @@
+.product-list thead th{ text-align: center;}
+.product-list tbody td{ text-align: center;}
+.product-list .colorimg{ display:inline-block; width:32px; height: 32px; margin-bottom:5px; border-radius: 16px; padding:2px; border:2px solid #ccc;}
+.product-list .colorname{font-size:9px; color:#999; }
+.product-list .lothtml b{ display:inline-block; width:30px}
+.product-list input{ width:80px; display: block;text-align: center; }
+.product-list .removeitem{width:80px; color:rgb(128, 31, 31); display: block; cursor: pointer; margin-top:7px; }
+.product-list .rowpiecediscount{ display:block; color:#999; font-size:10px; }
+
+.detailprices span{ display:block; color:#999;}
+
+.div-product-color-match{ display:none; margin-bottom:10px; }
+.table-product-color-match{ width:100%; border:1px solid #bbb; border-width: 1px 1px 0 0; text-align: center; }
+.table-product-color-match th, .table-product-color-match td{ border:1px solid #bbb; border-width: 0 0 1px 1px; padding:2px 3px;}
+.table-product-color-match tbody th{ width:140px; }
+
+
+@media print {
+    app-header , footer , .page-sidebar , .right-sidebar, .page-header ,  .card-header , .hide-on-print{ display:none !important; }
+    body,html, app-root , app-content-layout, .page-body-wrapper , main, app-sale-form , .page-body , .container-fluid , .card ,.card-body{display:inline-block !important; top:0 !important; bottom:0!important; background: #fff !important; margin:0 !important; padding:0 !important; float:left ; min-height:auto !important; max-height:auto !important ; height: auto !important; }
+    .theme-form{  background: #fff !important; height: auto !important; margin:0 !important; padding:0 !important; }
+    .theme-form .form-left{ width:100% !important;  max-width:100% !important; height: auto !important; flex:0 0 100% !important; background: #fff !important;  }
+    .theme-form .form-right{ width:100% !important; margin-top:10px; max-width:100% !important; height: auto !important; flex:0 0 100% !important; background: #fff !important;  }
+    .removeitem{ display:none !important; }
+    .div-product-color-match{ display: flex; }
+}

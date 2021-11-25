@@ -1,0 +1,318 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    <div class="card">
+        <div class="card-body">
+            <form class="theme-form installment-form-group" [formGroup]="userForm">
+
+                <div class="row">
+                    <div class="col-xl-4 col-sm-4">
+                        <div class="row m-t-5">
+                            <div class="col-xl-12 col-sm-12">
+                                <h5 class="installmentoptionstitle">Taksit Seçenekleri</h5>
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Teklif Durumu: <div *ngIf="userForm.controls.offerstatus.touched && userForm.controls.offerstatus.errors?.required" class="text text-danger">Seçiniz</div></label>
+                                
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <ng-select [items]="offerstatusOptions" formControlName="offerstatus" [(ngModel)]="offerstatusModel" bindValue="i" bindLabel="n" placeholder="Teklif Durumu" required ></ng-select>    
+                            </div> 
+                        </div>
+
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Konut:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <ng-select [items]="housingOptions" formControlName="housing" (change)="housingOnChange($event)" [(ngModel)]="housingModel" bindValue="i" bindLabel="n" placeholder="Konut" ></ng-select>
+                            </div>    
+                        </div>
+
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Araç:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <ng-select [items]="carOptions" formControlName="car" (change)="carOnChange($event)" [(ngModel)]="carModel" bindValue="i" bindLabel="n" placeholder="Araç" ></ng-select>
+                            </div>
+                        </div>
+
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Grup:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <ng-select [items]="groupOptions" formControlName="installmentgroup" (change)="housingGroupOnChange($event)" [(ngModel)]="groupModel" bindValue="i" bindLabel="n" placeholder="Grup" ></ng-select>
+                            </div>
+                            
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Grup Sayısı:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="numberofgroups"  (keyup)="changenumberofgroup()" [(ngModel)]="numberofgroupsModel" type="text"  required="">
+                                <!-- <ng-select [items]="numberofgroupsOptions" formControlName="numberofgroups" [(ngModel)]="numberofgroupsModel" bindValue="i" bindLabel="n" placeholder="Grup Sayısı" required ></ng-select> -->
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Müşteri Adı:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="customername" type="text" required="">
+                            </div>   
+                        </div>
+
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Sözleşme No: <i class="fas fa-info-circle" ngbTooltip="Buraya CRM'deki Sözleşme Numarasını Giriniz"></i> </label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="contractnumber" placeholder="Crmdeki Söz. No Giriniz.." type="text" >
+                            </div>  
+                        </div>
+
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Kullanıcı:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="userfullname" type="text" [(ngModel)]="username" readonly> 
+                            </div>       
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-4">
+                        <div class="row m-t-5">
+                            <div class="col-xl-12 col-sm-12">
+                                <h5 class="campaigndetailstitle">Kampanya Detayları</h5>
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Kampanya Bedeli:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="campaignprice" (keyup)="campaignpriceOnKeyup()" (change)="campaignpriceOnChange()" [(ngModel)]="campaignpriceModel" bindValue="i" bindLabel="n" type="text" required="" mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Peşinat Oranı:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" (keyup)="downpaymentOnChange()" formControlName="downpaymentrate" [(ngModel)]="downpaymentrateModel" type="text" prefix="%" maxlength="3" mask="separator.0" required="">
+                            </div>
+                        </div>
+
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Teslim Dönemi:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control deliveryperiod" formControlName="deliveryperiod" [(ngModel)]="deliveryperiodModel" type="text"  required="">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Taksit Başlangıç Tarih:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <ng-select [items]="installmentstartDates" formControlName="installmentstartdate" (change)="installmentstartdateOnChange('isd')" [(ngModel)]="installmentstartdateModel" bindValue="i" bindLabel="n" placeholder="Taksit Başlangıç Tarihi" required ></ng-select>        
+                            </div>
+                        </div>
+                        
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Peşinat Tutarı:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="downpaymentamount" (keyup)="downpaymentrateOnChange()"  [(ngModel)]="downpaymentamountModel" type="text" required="" mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Peşinat Hariç Tutar:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="amountexcludingdownpayment" [(ngModel)]="amountexcludingdownpaymentModel" type="text" required="" mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">İlk Taksit:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control firstinstallment" formControlName="firstinstallment" (keyup)="deliveryperiodOnChange('fi')" [(ngModel)]="firstinstallmentModel" type="text" required="" mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Teslim Sonrası Taksit:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="postdeliveryinstallments" (keyup)="deliveryperiodOnChange('pd')" [(ngModel)]="postdeliveryinstallmentsModel" mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Taksit Bitiş Tarihi:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="installmentfinishmonth" type="text" [(ngModel)]="installmentfinishmonthModel" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-4">
+                        <div class="row m-t-5">
+                            <div class="col-xl-9 col-sm-9">
+                                <h5 class="workingfeetitle">Çalışma Bedeli</h5> 
+                            </div> 
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Çalışma Bedeli:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7 input-group">
+                                <input class="form-control" formControlName="workingfee" (keyup)="deliveryperiodOnChange('wf')" [(ngModel)]="discountpriceModel" type="text" required="" mask="separator.0" thousandSeparator=",">
+                                <div class="input-group-append" style="position: relative;">
+                                    <div class="installmenttitle" >Taksit<br>Detayı</div> 
+                                    <button class="btn btn-danger" (click)="workingfeeinstallments()"><i class="fas fa-calculator"></i></button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">İskonto:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <ng-select [items]="discountOptions" formControlName="discount" (change)="deliveryperiodOnChange('ds')" [(ngModel)]="discountModel" bindValue="i" bindLabel="n" placeholder="iskonto"></ng-select>        
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">İskonto Bedeli:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="discountprice" (keyup)="deliveryperiodOnChange('dp')" [(ngModel)]="discountedworkingfeeModel" type="text"  mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">İskontolu Tutar:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control discountedworkingfee" formControlName="discountedworkingfee" (keyup)="deliveryperiodOnChange('dw')" [(ngModel)]="workingfeeModelson" type="text" required="" mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Taksit Sayısı:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <ng-select [items]="numberofinstallmentsOptions" formControlName="numberofinstallments" (change)="deliveryperiodOnChange('ni')" [(ngModel)]="numberofinstallmentsModel" bindValue="i" bindLabel="n" placeholder="Taksit Sayısı" required ></ng-select>        
+                                <!-- <input class="form-control" formControlName="numberofinstallments" type="text" required=""> -->
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Taksit Başlangıç Tarih:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <ng-select [items]="installmentstartDa" formControlName="installmentstartdatec" (change)="installmentstartdateOnChange('isc')" [(ngModel)]="installmentstartdateModelc" bindValue="i" bindLabel="n" placeholder="Taksit Başlangıç Tarihi" required ></ng-select>        
+                            </div>
+                        </div>
+                        
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">İlk Ay Toplam Ödeme:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control" formControlName="firstmonthtotalpayment" [(ngModel)]="firstmonthtotalpaymentModel" type="text" required="" mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-xl-5 col-sm-5">
+                                <label class="col-form-label">Toplam Maliyet:</label>
+                            </div>
+                            <div class="col-xl-7 col-sm-7">
+                                <input class="form-control totalcost" formControlName="totalcost" [(ngModel)]="totalcostModel" type="text" required="" mask="separator.0" thousandSeparator=",">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- <div class="row m-t-20">
+
+                    <div class="col-xl-3 col-sm-3">
+                        <label class="col-form-label">Durum</label>
+                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                          <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                            <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                            <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div> -->
+                
+                <div class="form-group form-row mt-3 mb-0">
+                    <button class="btn btn-danger mr-2"  (click)="submit(userForm.value)" type="button">Gönder</button>
+                    <button class="btn btn-outline-danger-2x" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <!-- (activate)="onActivateTable($event)" -->
+
+            <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [columns]="columns" [selected]="tableselected"
+                [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="100" [rows]='tabledata'>
+            </ngx-datatable>
+            <ng-template #dodeme let-row="row" let-value="value" ngx-datatable-cell-template>
+                {{value | number:'1.0-0'}} ₺
+            </ng-template> 
+            <ng-template #todeme let-row="row" let-value="value" ngx-datatable-cell-template>
+                {{value | number:'1.0-0'}} ₺
+            </ng-template> 
+        </div>
+    </div>
+</div>
+
+
+<!-- Burada bişeyler başlıyor -->
+
+<ng-template #myModal let-modal>
+    <div class="modal-header modal-copy-header">
+        <h5 class="headerTitle mb-0">Çalışma Bedeli Taksitleri</h5>
+        <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            <span aria-hidden="true">&times;</span>
+        </button> -->
+    </div>
+    <div class="modal-body">
+        <div class="modal-header config-popup">
+            <div class="row m-t-5 m-b-5" *ngFor="let ins of monthlyinstallmentsGroup">
+
+                <div class="col-xl-5 col-sm-5">
+                    <label class="col-form-label">{{ ins }}. Taksit</label>
+                </div>
+
+                <div class="col-xl-7 col-sm-7" *ngIf=" ins == 1 ">
+                    <input [(ngModel)]="monthlyinstallments[ ins ]" (keyup)="ilktaksitdegismesi()" [ngModelOptions]="{standalone: true}"  type="text"  mask="separator.0" thousandSeparator=",">
+                </div>
+                <div class="col-xl-7 col-sm-7" *ngIf="ins > 1 ">
+                    <input [(ngModel)]="monthlyinstallments[ ins ]" [ngModelOptions]="{standalone: true}"  type="text"  readonly  mask="separator.0" thousandSeparator=",">
+                </div>
+            </div>
+        <div>
+
+            </div>
+          <!-- <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" value="{{this.customize.data.color}}"  disabled></textarea> -->
+            <button class="btn btn-danger mr-2" (click)="taksitModalKaydet(); modal.dismiss('Cross click') ;  ">Kaydet</button>
+        </div>
+    </div>
+ </ng-template>

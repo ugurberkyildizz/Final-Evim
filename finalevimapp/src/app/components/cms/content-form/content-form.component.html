@@ -1,0 +1,141 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    <div class="card">
+
+        <div class="card-header">
+            <!-- <h5>Kategori Formu</h5> -->
+            <span>Bu kategorilerin sisteme sonradan eklenecek her firma için ayrı bir karşılığı vardır. E-ticaret dışında kalan eşleştirmeler farklı sayfada yönetilir.</span>
+          </div>
+
+        <div class="card-body">
+
+            <form class="theme-form" [formGroup]="userForm">
+
+                <div class="row">
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Kategori
+                                <div *ngIf="userForm.controls.categories.touched && userForm.controls.categories.errors?.required" class="text text-danger">Kategori seçiniz</div>
+                            </label>
+                            <ng-select [items]="categoryOptions" multiple="true" formControlName="categories" [(ngModel)]="categoryModel" bindValue="i" bindLabel="n" placeholder="Kategori Seçiniz" required ></ng-select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row"><div class="col-sm-12">&nbsp;</div></div>
+
+                <ngb-tabset>
+                    <ngb-tab *ngFor="let lang of activeLanguages" title="{{lang.nm}}">
+                      <ng-template ngbTabContent>
+                        <div [formGroupName]="lang.cd">
+                            <div class="row">
+
+                                <div class="col-xl-8 col-sm-8">
+                                    <div class="form-group">
+                                        <label class="col-form-label">İçerik Başlığı</label>
+                                        <div class="input-group for-multilanguage">
+                                            <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependCatName" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                            <input class="form-control" formControlName="contentname" type="text" aria-describedby="inputGroupPrependCatName" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-sm-4">
+    
+                                    <div class="form-group">
+                                    <label class="col-form-label">İçerik Kısa Başlığı</label>
+                                    <div class="input-group for-multilanguage">
+                                        <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependCatMin" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                        <input class="form-control" formControlName="contentminname" type="text" aria-describedby="inputGroupPrependCatMin">
+                                    </div>
+                                    </div>
+                
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                    
+                                <div class="col-xl-8 col-sm-8">
+            
+                                    <div class="form-group">
+                                    <label class="col-form-label">Meta Açıklama (arama motorları için)</label>
+                                    <div class="input-group for-multilanguage">
+                                        <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependMetadesc" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                        <input class="form-control" formControlName="metadesc" type="text" aria-describedby="inputGroupPrependMetadesc">
+                                    </div>
+                                    </div>
+                
+                                </div>
+
+                                <div class="col-xl-4 col-sm-4">
+                
+                                    <div class="form-group">
+                                    <label class="col-form-label">Seo URL (Diğer tüm içeriklerden <u>benzersiz</u>)</label>
+                                    <div class="input-group for-multilanguage">
+                                        <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependSeourl" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                        <input class="form-control" formControlName="seourl" type="text" aria-describedby="inputGroupPrependSeourl">
+                                    </div>
+                                    </div>
+                
+                            </div>
+                                
+                            </div>
+
+                            <div class="row">
+                    
+                                <div class="col-xl-12 col-sm-12">
+            
+                                    <div class="form-group">
+                                    <label class="col-form-label">Özeti (gösterildiği yerdeki diğer içeriklerin uzunluğuna uygun şekilde)</label>
+                                    <div class="input-group for-multilanguage">
+                                        <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependSummary" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                        <input class="form-control" formControlName="summary" type="text" aria-describedby="inputGroupPrependSummary">
+                                    </div>
+                                    </div>
+                
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                            <div class="col-xl-12 col-sm-12">
+                                <div class="form-group">
+                                  <label class="col-form-label"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i> İçerik</label>
+                                  <app-ngx-editor formControlName="htmlcontent" [config]="editorConfig"></app-ngx-editor>
+                                </div>
+                              </div>
+    
+                            </div>
+                        </div>
+                      </ng-template>
+                    </ngb-tab>
+                    
+                  </ngb-tabset>
+
+
+                <div class="row">
+
+                    <div class="col-xl-3 col-sm-3">
+                        <label class="col-form-label">Durum</label>
+                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                          <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                            <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                            <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group form-row mt-3 mb-0">
+                    <button class="btn btn-primary mr-2" [disabled]="!userForm.valid" (click)="submit(userForm.value)" type="submit">Gönder</button>
+                    <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

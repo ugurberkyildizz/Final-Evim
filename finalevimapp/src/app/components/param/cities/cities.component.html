@@ -1,0 +1,30 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-12">
+          <div class="card"> 
+
+            <ngx-loading [show]="loading" [config]="{backdropBackgroundColour:'rgba(255,255,255,.5)',primaryColour:'#4580d0',secondaryColour:'#2e6fc9',tertiaryColour:'#1d64c5'}"></ngx-loading>
+              
+              <div class="card-body custom-datatable">
+                
+                  <input type='text' class="filter-ngx form-control" placeholder='Ara...' (keyup)='updateFilter($event)' />
+
+                  <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [columns]="columns" 
+                      [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="50" [rows]='tabledata'>
+                  </ngx-datatable>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+
+<ng-template #status let-row="row" let-value="value" ngx-datatable-cell-template>
+  <i class="fas fa-toggle-on {{value==0?'fa-rotate-180':''}} togglebt_class status_{{value}}" (click)="changeStatus( row )"></i>
+</ng-template>
+
+<ng-template #hdrTpl let-column="column" let-sort="sortFn" >
+  <div (click)="sort()" class="pocusortbutton"><i class="fas fa-arrows-alt-v"></i></div>
+  <div class="inputcontainer"><input type="text" placeholder="{{ column.name }}" (keyup)="updateColFilter($event, column.prop)" /></div>
+</ng-template>

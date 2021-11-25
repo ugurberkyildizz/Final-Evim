@@ -1,0 +1,40 @@
+.my-drop-zone{width:100%; margin:0 0 15px 0; text-align: center;}
+.noimagediv{ text-align:center; padding:40px 50px; background:#f6f6f6; border:1px solid #ddd; margin-bottom:25px; }
+.image-gallery{ margin-bottom:25px; background:#f6f6f6; padding:10px 20px; border:1px solid #ddd; }
+.imggalcontainer{ 
+    position: relative;
+    background-color: #fff;
+    margin-top:10px;
+    margin-bottom:10px;
+    height:200px; background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: contain;
+    border:3px solid #fff;
+    box-shadow: 0 0 2px #999;
+    border-radius: 4px;
+}
+
+.imggalcontainer i.removeimg{ display:none; transition: .2s ease all; cursor:pointer; width:22px; transition: .2s ease all; height:22px; line-height:20px; text-align:center; border-radius:11px; position: absolute; right:-11px; top:-11px; border:1px solid #ddd; background: #fff; }
+.imggalcontainer i.removeimg:hover{ background:#f00; color:#fff; }
+
+
+.imggalcontainer i.mainimg{ display:none; transition: .2s ease all; cursor:pointer; transition: .2s ease all; width:22px; height:22px; line-height:22px; text-align:center; border-radius:11px; position: absolute; left:-11px; bottom:-11px; border:1px solid #ddd; background: #fff; }
+.imggalcontainer i.mainimg:hover{ background: rgb(42, 184, 37); color:#fff; }
+.imggalcontainer.active i.mainimg{display:inline-block; background:#369; color:#fff; }
+
+.gu-mirror{ display:inline-block; }
+
+.subimgdiv{ display:inline-block; width:38px; height:38px; border:1px solid #fff; box-shadow: 0 0 2px #222; margin-top:-2px; border-radius: 19px; cursor: pointer; background-size:contain; background-repeat: no-repeat;}
+.subimgdiv .upload{ cursor: pointer; }
+
+.colorsbox{ position: absolute; display:none; left:-8px; top:-8px; width:16px; height:100%; text-align: center; }
+.colorsbox .color{ display:inline-block; margin-top:-1px; }
+.colorsbox .color em{display:inline-block; cursor: pointer; width:16px; height:16px; border-radius: 8px;  border:1px solid #fff; box-shadow: 0 0 2px #222;}
+
+.colorimg{ transition: .2s ease all; font-size: 10px; width:22px; height:22px; line-height:22px; text-align:center; border-radius:11px; position: absolute; right:-11px; bottom:-11px; border:1px solid #ddd; box-shadow: 0 0 2px #222;}
+
+.imggalcontainer:hover{
+    i.removeimg{display:inline-block; }
+    i.mainimg{display:inline-block; }
+    .colorsbox{ display:inline-block;}
+}

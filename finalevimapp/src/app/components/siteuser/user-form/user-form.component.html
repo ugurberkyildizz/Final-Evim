@@ -1,0 +1,379 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    <div class="card">
+        <div class="card-body">
+            <form class="theme-form" [formGroup]="userForm">
+
+                <ngb-tabset>
+
+                    <ngb-tab title="Kullanıcı Bilgileri">
+                        <ng-template ngbTabContent>
+
+                            <div *ngFor="let userindex of userindexes" class="user-information">
+                                
+                                <input class="form-control" formControlName="{{'userid__'+userindex}}" type="hidden">
+
+                                <div class="row">
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">İsim</label>
+                                            <div class="input-group">
+                                                <input class="form-control" formControlName="{{'name__'+userindex}}" type="text" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Soyisim</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="{{'surname__'+userindex}}" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Kişi Ünvanı</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="{{'usertitle__'+userindex}}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Telefon</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="{{'userphone__'+userindex}}" required="" mask="(000) 000 00 00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                </div>
+
+                                <div class="row">
+
+                                   
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">E-posta</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="email" formControlName="{{'useremail__'+userindex}}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Kullanıcı Adı</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="{{'username__'+userindex}}" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Şifre</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="password" formControlName="{{'userpassword__'+userindex}}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-2 col-sm-2">
+                                        <label class="col-form-label">Kullanıcı Durumu</label>
+                                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                          <div class="radio radio-primary" *ngFor="let opt of userstatusOptions">
+                                            <input id="userstatus__{{ userindex+'-'+opt.i }}" type="radio" formControlName="{{'userstatus__'+userindex}}" [value]="opt.i">
+                                            <label for="userstatus__{{ userindex+'-'+opt.i }}">{{ opt.n }}</label>
+                                          </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-1 col-sm-1">
+                                        <label class="col-form-label">Varsayılan</label>
+                                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                            <div class="radio radio-primary">
+                                              <input id="defaultuser__{{userindex}}" type="radio" formControlName="defaultuser" [value]="userindex"  [(ngModel)]="defaultuserModel" >
+                                              <label for="defaultuser__{{userindex}}">Evet</label>
+                                            </div>
+                                          </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group form-row mt-3 mb-3">
+                                <button class="btn btn-success" (click)="adduser()" type="button">Cariye Kullanıcı Ekle</button>
+                            </div>
+
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab title="Cari Bilgiler">
+                        <ng-template ngbTabContent>
+
+                            <div class="account-information">
+
+                            
+                                <div class="row">
+                                    
+                                    <div class="col-xl-9 col-sm-9">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Firma Ünvanı</label>
+                                            <div class="input-group">
+                                                <input class="form-control" formControlName="companyname" [(ngModel)]="appCompanyNameModel" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Sistem Cari Kod <button *ngIf="formid=='new'" style="float:right;" class="btn btn-warning btn-xs" (click)="updateWithAccountCode()">Getir</button></label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" [(ngModel)]="appAccountCodeModel" formControlName="accountcode">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Vergi Daire</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="taxoffice">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Vergi No (ya da TC)</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="taxno">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-sm-3">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Kategori</label>
+                                            <ng-select [items]="categoryOptions" formControlName="category" bindValue="i" bindLabel="n" placeholder="Kategori Seçiniz" ></ng-select>
+                                        </div>
+                
+                                    </div>
+
+                                    <div class="col-xl-2 col-sm-2">
+                                        <div class="form-group">
+                                            <label class="col-form-label">İndirim Oranı (0.00)</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="discountrate">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    
+                                    <div class="col-xl-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Açıklama</label>
+                                            <div class="input-group">
+                                                <input class="form-control" formControlName="description" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                </div>  
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab title="Adresler">
+                        <ng-template ngbTabContent>
+
+                            <div *ngFor="let addrindex of addressindexes" class="address-information">
+                                
+                                <input class="form-control" formControlName="{{'addressid__'+addrindex}}" type="hidden">
+
+                                <div class="row">
+
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Adres Başlığı</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="{{'addresstitle__'+addrindex}}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-9 col-sm-9">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Adres</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="{{'addressdetail__'+addrindex}}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-xl-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">E-posta</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="email" formControlName="{{'addressemail__'+addrindex}}" >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-2 col-sm-2">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Telefon</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" formControlName="{{'addressphone__'+addrindex}}" mask="(000) 000 00 00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="col-xl-2 col-sm-2">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Ülke</label>
+                                            <ng-select [items]="countryOptions" formControlName="{{'addresscountry__'+addrindex}}" [(ngModel)]="countryModel[addrindex]" bindValue="i" bindLabel="n" (change)="onCountrySelected($event , addrindex , 1)" placeholder="Ülke Seçiniz" required ></ng-select>
+                                        </div>
+                
+                                    </div>
+                                    
+                                    <div class="col-xl-2 col-sm-2">
+                
+                                        <div class="form-group">
+                                            <label class="col-form-label">Şehir <span *ngIf="cityWait[addrindex]">(Yükleniyor)</span></label>
+                                            <ng-select [items]="cityOptions[addrindex]" formControlName="{{'addresscity__'+addrindex}}" [(ngModel)]="cityModel[addrindex]" bindValue="i" bindLabel="n" placeholder="Şehir Seçiniz" required></ng-select>
+                                           
+                                        </div>
+                
+                                    </div>
+
+                                    <div class="col-xl-2 col-sm-2">
+                                        <label class="col-form-label">Adres Durumu</label>
+                                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                          <div class="radio radio-primary" *ngFor="let opt of addressstatusOptions">
+                                            <input id="addressstatus__{{ addrindex+'-'+opt.i }}" type="radio" formControlName="{{'addressstatus__'+addrindex}}" [value]="opt.i">
+                                            <label for="addressstatus__{{ addrindex+'-'+opt.i }}">{{ opt.n }}</label>
+                                          </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-1 col-sm-1">
+                                        <label class="col-form-label">Varsayılan</label>
+                                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                            <div class="radio radio-primary">
+                                              <input id="defaultaddress__{{addrindex}}" type="radio" formControlName="defaultaddress" [value]="addrindex"  [(ngModel)]="defaultaddressModel" >
+                                              <label for="defaultaddress__{{addrindex}}">Evet</label>
+                                            </div>
+                                          </div>
+                                    </div>
+
+                                </div>
+
+                                
+                            </div>
+
+                            <div class="form-group form-row mt-3 mb-3">
+                                <button class="btn btn-success" (click)="addaddress()" type="button">Cariye Adres Ekle</button>
+                            </div>
+
+                        </ng-template>
+                    </ngb-tab>
+
+                    
+
+                    <ngb-tab title="Siparişler">
+                        <ng-template ngbTabContent>
+
+                            <button class="btn btn-success" [style.width.%]="100" [style.margin-bottom]="'20px'" (click)="getOrderHistory()" type="submit">Bilgileri Getir</button>
+                            
+                            <ngx-loading [show]="orderhistoryloading" [config]="{backdropBackgroundColour:'rgba(255,255,255,.5)',primaryColour:'#4580d0',secondaryColour:'#2e6fc9',tertiaryColour:'#1d64c5'}"></ngx-loading>
+
+                            <ngx-datatable #orderhistorytable class='bootstrap' [columnMode]="'force'" [columns]="orderhistorycolumns" 
+                                [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [rows]='orderhistorydata'>
+                            </ngx-datatable>
+
+                        </ng-template>
+                    </ngb-tab>
+
+                    <!-- <ngb-tab title="Durum">
+                        <ng-template ngbTabContent>
+                            <ngx-datatable #accounttable class='bootstrap' [columnMode]="'force'" [columns]="accountstatuscolumns" 
+                                [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [rows]='accountstatusdata'>
+                            </ngx-datatable>
+                        </ng-template>
+                    </ngb-tab> -->
+
+                    <ngb-tab title="Firma Notları">
+                        <ng-template ngbTabContent>
+
+                            <div class="row">
+                                <div class="col-xl-12 col-sm-12">
+                                    <div class="form-group">
+                                      <label class="col-form-label">Firma İle İlgili Genel Notlar</label>
+                                      <div class="input-group">
+                                          <textarea class="form-control bignotes" formControlName="adminnotes"></textarea>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    
+
+                </ngb-tabset>
+
+                <div class="row">
+
+                    <div class="col-xl-12 col-sm-12 mt-4" style="border-top:1px dotted #ddd; ">
+                        <label class="col-form-label">Hesap Durumu</label>
+                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                          <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                            <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                            <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="form-group form-row mt-3 mb-0">
+                    <button class="btn btn-primary mr-2" (click)="submit(userForm.value)" type="submit">Gönder</button> <!-- [disabled]="!userForm.valid" -->
+                    <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #hdrTplOrderHistory let-column="column" let-sort="sortFn" >
+    <div (click)="sort()" class="pocusortbutton"><i class="fas fa-arrows-alt-v"></i></div>
+    <div class="inputcontainer"><input type="text" placeholder="{{ column.name }}" (keyup)="updateColFilterOrderHistory($event, column.prop)" /></div>
+</ng-template>
+
+<ng-template #hdrTplAccountStatus let-column="column" let-sort="sortFn" >
+    <div (click)="sort()" class="pocusortbutton"><i class="fas fa-arrows-alt-v"></i></div>
+    <div class="inputcontainer"><input type="text" placeholder="{{ column.name }}" (keyup)="updateColFilterAccountStatus($event, column.prop)" /></div>
+</ng-template>
+
+<ng-template #historyMoneyCell let-row="row" let-value="value" let-i="index">
+    {{value | number:'1.2-2'}} ₺
+</ng-template>

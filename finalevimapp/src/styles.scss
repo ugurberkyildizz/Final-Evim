@@ -1,0 +1,69 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~ngx-smart-modal/ngx-smart-modal";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~mat-range-datepicker/_theming';
+
+/* .ngx-datatable .datatable-header .datatable-header-cell{color:#0288d1; }
+.ngx-datatable .datatable-header .datatable-header-cell:first-child{ border-left:none; }
+.ngx-datatable .datatable-header .datatable-header-cell.sort-asc .datatable-header-cell-template-wrap:after{ font-family: FontAwesome; content:"\f102"; float: right; }
+.ngx-datatable .datatable-header .datatable-header-cell.sort-desc .datatable-header-cell-template-wrap:after{font-family: FontAwesome;  content:"\f103"; float: right; }
+.ngx-datatable .uppercase{ text-transform: uppercase; }
+.ngx-datatable .toolbox:before{font-family: FontAwesome; font-size:18px; content : "\f009"; float:left; } */
+ 
+.ngx-datatable.bootstrap .datatable-header .datatable-header-cell{padding:0.75em 0.30em;color:#cf0404;}
+.ngx-datatable .datatable-header .datatable-header-cell-template-wrap .inputcontainer{ padding:0; width:calc(100% - 20px); float:right; padding-right:3px; }
+.ngx-datatable .datatable-header .datatable-header-cell-template-wrap .inputcontainer input{ padding:3px 5px; color:rgb(10, 173, 65); border-radius: 3px; margin:0; width:100%; outline:none; border:0; background:transparent; }
+.ngx-datatable .datatable-header .datatable-header-cell-template-wrap .inputcontainer input::placeholder{ color:#0288d1; }
+.ngx-datatable .datatable-header .datatable-header-cell-template-wrap .inputcontainer input:focus{ background:rgb(244, 248, 214); }
+.ngx-datatable .datatable-header .datatable-header-cell-template-wrap .pocusortbutton{ width:20px; float:right; padding:3px 5px 0 5px; cursor: pointer; }
+.ngx-datatable .datatable-header .datatable-header-cell.sort-asc .pocusortbutton i:before{ content:"\f102"; }
+.ngx-datatable .datatable-header .datatable-header-cell.sort-desc .pocusortbutton i:before{ content:"\f103"; }
+.ngx-datatable .toolbox:before{ font-size:18px; content : "✻"; margin-right:8px; float:right; color:#999; }
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row.active {background-color: rgba(178, 34, 34, 0.7)!important;}
+
+.card-header .btn.header-right{ position:absolute; top:30px; right:30px; height:35px; }
+.card-body{ position: relative; }
+.card-body > .btn{ position:absolute; top:30px; right:30px; height:35px; }
+.card-body > .aditionalsearchdiv{ position:absolute; top:30px; right:20px; height:35px; width:70%; }
+.card-body > .aditionalsearchdiv > *{ float:right; max-width: 200px; margin-right: 10px; }
+
+.card-body .form-group .input-group.for-multilanguage{ margin-bottom:10px; }
+.card-body .form-group .input-group-text{padding:4px 10px; height:35px;}
+.card-body .form-group .input-group-text i.flag-icon{font-size:13px;}
+.card-body .form-group .input-group .ng-invalid.ng-touched{ background: rgba(255, 0, 0, 0.1);}
+
+.card-body .installment-form-group .ng-invalid.ng-touched{ background: rgba(255, 0, 0, 0.1);}
+
+.card-body .form-group .input-group-text i{ width: 20px; }
+.card-body .form-group .input-group.forngselect > .ng-select{ display:flex; position: relative;  width:1%; flex:1 1 auto;}
+.card-body .form-group .input-group.forngselect .ng-select-container{border-top-left-radius:0; border-bottom-left-radius:0; height:35px; min-height:35px;}
+.card-body .form-group .input-group.forngselect .ng-dropdown-panel.ng-select-bottom{margin-top:-2px;}
+
+.theme-form label small{color:#ddd;}
+.theme-form label.col-form-label{ width:100%; }
+.theme-form label.col-form-label .text-danger{ float:right; margin:0 4px 0 0; padding:0; }
+
+.theme-form input{ border-color: #ddd ; }
+
+.ng-select-container{ border-color: #ddd !important;}
+
+.theme-form textarea:focus, .theme-form input:focus{  outline:none; box-shadow: none !important; border-color:#666 !important;}
+
+.theme-form input::-webkit-autofill , .theme-form input::-webkit-contacts-auto-fill-button { visibility: hidden; display: none !important; pointer-events: none; position: absolute; right: 0; }
+
+.togglebt_class{ font-size:28px; cursor: pointer; opacity: .8; transition: .2s ease all;}
+.togglebt_class:hover{text-shadow: 0 0 1px #000; opacity: 1;}
+.togglebt_class.status_0{ color:rgb(162, 168, 173); }
+.togglebt_class.status_1{ color:#369; }
+
+
+.theme-form .pocu-mat-date input{position:relative; }
+.theme-form .pocu-mat-date .mat-datepicker-toggle{ position: absolute; top:-2px; right:7px; }
+.theme-form .pocu-mat-date button.cdk-focused{ outline:none; border:0 !important; box-shadow: 0 !important; }
+
+.top-search-form { text-align: left; padding-bottom:10px; }
+.top-search-form input{position:relative; height:35px; }
+.top-search-form .pocu-mat-date{ display:inline-block; width:130px; position:relative; text-align: left; margin-right:15px; }
+.top-search-form .pocu-mat-date .mat-datepicker-toggle{ position: absolute; top:-2px; right:-2px; }
+.top-search-form .pocu-mat-date button.cdk-focused{ outline:none; border:0 !important; box-shadow: 0 !important; }
+.top-search-form .btn.btn-primary{ margin-bottom:1px; }

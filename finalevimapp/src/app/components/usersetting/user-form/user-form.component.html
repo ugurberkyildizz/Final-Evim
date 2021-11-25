@@ -1,0 +1,175 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    <div class="card">
+        <div class="card-body">
+            <form class="theme-form" [formGroup]="userForm">
+
+                <div class="row">
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">İsim
+                                <div *ngIf="userForm.controls.name.touched && userForm.controls.name.errors?.required" class="text text-danger">isim giriniz</div>
+                                <div *ngIf="userForm.controls.name.touched && userForm.controls.name.errors?.name" class="text text-danger">Geçersiz isim</div>
+                            </label>
+                            <input class="form-control" formControlName="name" type="text" required="">
+                        </div>
+
+                    </div>
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Soyisim
+                                <div *ngIf="userForm.controls.surname.touched && userForm.controls.surname.errors?.required" class="text text-danger">soyisim giriniz</div>
+                            </label>
+                            <input class="form-control" type="text" formControlName="surname" required="">
+                            
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Doğum Tarihi <small>Gün/Ay/Yıl</small>
+                                <div *ngIf="userForm.controls.birthdate.touched && userForm.controls.birthdate.errors?.required" class="text text-danger">tarih giriniz</div>
+                            </label>
+                            <input class="form-control" type="text" formControlName="birthdate" mask="00/00/0000" required="">
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">TC Kimlik No (TC Vatandaşı ise)
+                                <div *ngIf="userForm.controls.identityno.errors?.minlength" class="text text-danger">tc no giriniz</div>
+                            </label>
+                            <input class="form-control" type="text" minLength="11" mask="00000000000" formControlName="identityno">
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Telefon
+                                <div *ngIf="userForm.controls.phone.touched && userForm.controls.phone.errors?.required" class="text text-danger">telefon giriniz</div>
+                            </label>
+                            <input class="form-control" type="text" formControlName="phone" required="" mask="(000) 000 00 00">
+                        </div>
+
+                    </div>
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">E-posta
+                                <div *ngIf="userForm.controls.email.touched && userForm.controls.email.errors?.required" class="text text-danger">e-posta giriniz</div>
+                            <div *ngIf="userForm.controls.email.touched && (!userForm.controls.email.errors?.required && userForm.controls.email.errors?.email)" class="text text-danger">doğru e-posta giriniz</div>
+                            </label>
+                            <input class="form-control" type="email" formControlName="email" required="">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Ülke
+                                <div *ngIf="userForm.controls.country.touched && userForm.controls.country.errors?.required" class="text text-danger">ülke seçiniz</div>
+                            </label>
+                            <ng-select [items]="countryOptions" formControlName="country" [(ngModel)]="countryModel" bindValue="i" bindLabel="n" (change)="onCountrySelected($event)" placeholder="Ülke Seçiniz" required ></ng-select>
+                        </div>
+
+                    </div>
+                    
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Şehir <span *ngIf="cityWait">(Yükleniyor)</span>
+                                <div *ngIf="userForm.controls.city.touched && userForm.controls.city.errors?.required" class="text text-danger">şehir seçiniz</div>
+                            </label>
+                            <ng-select [items]="cityOptions" formControlName="city" [(ngModel)]="cityModel" bindValue="i" bindLabel="n" placeholder="Şehir Seçiniz" required></ng-select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Kullanıcı Adı
+                                <div *ngIf="userForm.controls.username.errors?.minlength" class="text text-danger">Kullanıcı adı giriniz</div>
+                            </label>
+                            <input class="form-control" type="text" formControlName="username">
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Şifre
+                                <div *ngIf="userForm.controls.password.errors?.minlength" class="text text-danger">Şifre giriniz</div>
+                            </label>
+                            <input class="form-control" type="password" [(ngModel)]="passwordModel" formControlName="password">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xl-3 col-sm-3">
+                        <div class="form-group">
+                            <label class="col-form-label">Kullanıcı Yetki Grubu
+                                <div *ngIf="userForm.controls.useraccessgroup.touched && userForm.controls.useraccessgroup.errors?.required" class="text text-danger">Kullanıcı grubu seçiniz</div>
+                            </label>
+                            <ng-select [items]="userAccessGroupOptions" formControlName="useraccessgroup" [(ngModel)]="userAccessGroupModel" bindValue="i" bindLabel="n" placeholder="Kullanıcı Grubu" ></ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-3">
+                        <div class="form-group">
+                            <label class="col-form-label">Kullanıcı Firma
+                                <div *ngIf="userForm.controls.usercompanies.touched && userForm.controls.usercompanies.errors?.required" class="text text-danger">Kullanıcı firma seçiniz</div>
+                            </label>
+                            <ng-select [items]="companyOptions" multiple="true" formControlName="usercompanies" bindValue="i" bindLabel="n" placeholder="Kullanıcı Firması" ></ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-3">
+                        <label class="col-form-label">Kimlik Kontrolü</label>
+                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                          <div class="radio radio-primary" *ngFor="let opt of identitycheckOptions">
+                            <input id="identitycheck{{ opt.i }}" type="radio" formControlName="identitycheck" [value]="opt.i" [(ngModel)]="identitycheckModel">
+                            <label for="identitycheck{{ opt.i }}">{{ opt.n }}</label>
+                          </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-sm-3">
+                        <label class="col-form-label">Kullanıcı Durumu</label>
+                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                          <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                            <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="userstatusModel">
+                            <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group form-row mt-3 mb-0">
+                    <button class="btn btn-primary mr-2" [disabled]="!userForm.valid" (click)="submit(userForm.value)" type="submit">Gönder</button>
+                    <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

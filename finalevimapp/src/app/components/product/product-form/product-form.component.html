@@ -1,0 +1,517 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    <div class="card">
+
+        <div class="card-header">
+            <h5>Ürün Özellikleri</h5>
+            <span>Bu ürünler sisteme api/service yoluyla eklenir. Burada görsel, isim gibi bilgileri düzenleyebilirsiniz. Stoklar ve fiyat senkronize gelir.</span>
+          </div>
+
+        <div class="card-body">
+
+            <form class="theme-form" [formGroup]="userForm">
+
+                <div class="row"><div class="col-sm-12">&nbsp;</div></div>
+
+                <ngb-tabset>
+
+                    <ngb-tab title="Özellikler">
+                        <ng-template ngbTabContent>
+
+                            <div class="row">
+                                <div class="col-xl-12 col-sm-12">
+
+                                    <div class="row">
+                                        
+                                        <div class="col-xl-4 col-sm-4">
+
+                                            <div class="row">
+
+                                                <div class="col-xl-12 col-sm-12">
+                    
+                                                    <div class="form-group">
+                                                        <label class="col-form-label" placement="top" ngbTooltip="Websitesinde görüntülenecek kategoriler">Bağlı Kategoriler
+                                                            <div *ngIf="userForm.controls.categories.touched && userForm.controls.categories.errors?.required" class="text text-danger">Kategori seçiniz</div>
+                                                        </label>
+                                                        <ng-select [items]="categoryOptions" multiple="true" formControlName="categories" [(ngModel)]="categoriesModel" bindValue="i" bindLabel="n" placeholder="Kategori Seçiniz" required ></ng-select>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xl-12 col-sm-12">
+                            
+                                                    <div class="form-group">
+                                                        <label class="col-form-label" placement="top" ngbTooltip="Stok durumu renge göre değişir">Renkler
+                                                            <div *ngIf="userForm.controls.colors.touched && userForm.controls.colors.errors?.required" class="text text-danger">Renk seçiniz</div>
+                                                        </label>
+                                                        <ng-select [items]="colorsOptions" multiple="true" [maxSelectedItems]="1" formControlName="colors" [(ngModel)]="colorsModel" (change)="colorsListChange(0)" bindValue="i" bindLabel="n" placeholder="Renk Seçiniz" required ></ng-select>
+                                                    </div>
+                            
+                                                </div>
+                                            </div>
+                    
+                                        </div>
+
+                                        <div class="col-xl-2 col-sm-2">
+
+                                            <div class="row">
+                                        
+                                                <div class="col-xl-12 col-sm-12">
+                            
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Marka
+                                                            <div *ngIf="userForm.controls.brand.touched && userForm.controls.brand.errors?.required" class="text text-danger">Marka</div>
+                                                        </label>
+                                                        <ng-select [items]="brandOptions" formControlName="brand" [(ngModel)]="brandModel" bindValue="i" bindLabel="n" placeholder="Marka" required ></ng-select>
+                                                    </div>
+                            
+                                                </div>
+        
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xl-12 col-sm-12">
+
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Ürün Kodu
+                                                            <div *ngIf="userForm.controls.productcode.touched && userForm.controls.productcode.errors?.required" class="text text-danger">GİR</div>
+                                                        </label>
+                                                        <input class="form-control" formControlName="productcode" type="text" required>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xl-6 col-sm-6">
+
+                                            <div class="row">
+
+                                                <div class="col-xl-2 col-sm-2">
+                            
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Fiyat
+                                                            <div *ngIf="userForm.controls.productprice.touched && userForm.controls.productprice.errors?.required" class="text text-danger">GİR</div>
+                                                        </label>
+                                                        <input class="form-control" formControlName="productprice"  [(ngModel)]="priceModel" type="text" required>
+                                                    </div>
+                            
+                                                </div>
+                            
+                                                <div class="col-xl-2 col-sm-2">
+                            
+                                                    <div class="form-group">
+                                                        <label class="col-form-label" placement="top" ngbTooltip="İndirimli satış için, tür ile birlikte giriniz. 5 TL indirim için 5 giriniz.">İndirim</label>
+                                                        <input class="form-control" formControlName="productdiscount" placeholder="" type="text" >
+                                                    </div>
+                            
+                                                </div>
+        
+                                                <div class="col-xl-4 col-sm-4">
+                                                    <label class="col-form-label">İndirim Türü</label>
+                                                    <div class="form-group m-t-10 m-checkbox-inline mb-0">
+                                                    <div class="radio radio-primary" *ngFor="let opt of discounttypeOptions" style="width:auto; padding:0; margin:0; float:left;">
+                                                        <input id="discounttype{{ opt.i }}" type="radio" formControlName="discounttype" [(ngModel)]="discounttypeModel" [value]="opt.i" >
+                                                        <label for="discounttype{{ opt.i }}">{{ opt.n }}</label>
+                                                    </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-2 col-sm-2">
+                    
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Giriş</label>
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input id="checkbox-primary-new" type="checkbox" formControlName="isnewproduct" value="1">
+                                                            <label for="checkbox-primary-new" ngbTooltip="Anasayfada Yeni Ürünlere Ekler">Yeni</label>
+                                                        </div>
+                                                    </div>
+                            
+                                                </div>
+
+                                                <div class="col-xl-2 col-sm-2">
+                    
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Giriş</label>
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input id="checkbox-primary-select" type="checkbox" formControlName="ischoiceforyou" value="1">
+                                                            <label for="checkbox-primary-select" ngbTooltip="Anasayfada Sizin İçin Seçtiklerimiz'e Ekler">Seç</label>
+                                                        </div>
+                                                    </div>
+                            
+                                                </div>
+                                            
+                                            </div>
+
+                                            <div class="row">
+
+
+                                                <div class="col-xl-4 col-sm-4">
+                    
+                                                    <div class="form-group">
+                                                        <label class="col-form-label" placement="top" ngbTooltip="Ürünün tahmini teslim tarihi">Termin
+                                                            <div *ngIf="userForm.controls.deadline.touched && userForm.controls.deadline.errors?.required" class="text text-danger">GİR</div>
+                                                        </label>
+                                                        <ng-select [items]="deadlineOptions" formControlName="deadline" bindValue="i" bindLabel="n" placeholder="Teslim" required></ng-select>
+                                                    </div>
+                            
+                                                </div>
+
+                                                <div class="col-xl-4 col-sm-4">
+                            
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Stok
+                                                            <div *ngIf="userForm.controls.productstock.touched && userForm.controls.productstock.errors?.required" class="text text-danger">GİR</div>
+                                                        </label>
+                                                        <input class="form-control" formControlName="productstock" type="text" required>
+                                                    </div>
+                            
+                                                </div>
+
+                                                
+
+                                                <div class="col-xl-2 col-sm-2">
+                            
+                                                    <div class="form-group">
+                                                        <label class="col-form-label" placement="top">Stokdışı</label>
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input id="checkbox-primary-outof" type="checkbox" formControlName="isoutofstocksale" value="1">
+                                                            <label for="checkbox-primary-outof" ngbTooltip="Ürün stokta yoksa da satmaya devam eder">Satış</label>
+                                                        </div>
+                                                    </div>
+                            
+                                                </div>
+
+                                                <div class="col-xl-2 col-sm-2">
+                    
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Giriş</label>
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input id="checkbox-primary-feat" type="checkbox" formControlName="isfeaturedproduct" value="1">
+                                                            <label for="checkbox-primary-feat" ngbTooltip="Anasayfada Öne Çıkanlar'a Ekler">Öner</label>
+                                                        </div>
+                                                    </div>
+                            
+                                                </div>
+        
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xl-12 col-sm-12" *ngIf="colorsModel.length > 0" style="margin-top:30px;">
+                                    <!--  && formid !== 'new' -->
+                                    <div class="row" *ngFor="let cid of colorsModel" [formGroupName]="'colorfeat_'+cid" >
+
+                                        <div class="col-xl-2 col-sm-2" *ngIf="colorsOptionsWithId[cid]">
+                                            <label class="col-form-label">Renk (kutudaki adetler)</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text" [style.line-height]="1" [ngStyle]="{background: colorsOptionsWithId[cid].s }">&nbsp;</span></div>
+                                                <input class="form-control" type="text" value="{{colorsOptionsWithId[cid].n}}" readonly [style.font-size]="'10px'" [style.padding]="'17px 3px'">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-10 col-sm-10" [formGroupName]="'shoenums'">
+                                            <div class="row">
+                                                <div class="col" *ngFor="let nm of shoenumbers">   
+                                                    <label class="col-form-label">Num {{ nm }}</label>         
+                                                    <div class="form-group">
+                                                        <input class="form-control" [formControlName]="'num_'+nm" type="text">
+                                                    </div>                        
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 
+                                        <div class="col-xl-1 col-sm-1">   
+                                            <label class="col-form-label" style="color:#999;">Seri</label>         
+                                            <div class="form-group">
+                                                <input class="form-control" formControlName="seriesname" type="text" readonly>
+                                            </div>                        
+                                        </div>
+
+                                        <div class="col-xl-9 col-sm-9">
+
+                                            <div class="row">
+
+                                                <div class="col-xl-3 col-sm-3">   
+                                                    <label class="col-form-label">Detay / Alt Stok</label>         
+                                                    <div class="form-group">
+                                                        <input class="form-control" formControlName="subinfo" type="text" readonly>
+                                                    </div>                        
+                                                </div>
+
+                                                <div class="col-xl-1 col-sm-1">   
+                                                    <label class="col-form-label">Stok</label>         
+                                                    <div class="form-group">
+                                                        <input class="form-control" formControlName="substock" type="text" readonly>
+                                                    </div>                        
+                                                </div>
+
+                                                <div class="col-xl-1 col-sm-1">   
+                                                    <label class="col-form-label" title="Paketteki ürün adedi">Adet</label>         
+                                                    <div class="form-group">
+                                                        <input class="form-control" formControlName="productqty" type="text" readonly>
+                                                    </div>                        
+                                                </div>
+
+                                                <div class="col-xl-2 col-sm-2">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label" placement="top" ngbTooltip="Ana tarihin üzerine yazar">Termin</label>
+                                                        <ng-select [items]="deadlineOptions" formControlName="deadline" bindValue="i" bindLabel="n" placeholder="Teslim" ></ng-select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-2 col-sm-2">   
+                                                    <label class="col-form-label" placement="top" ngbTooltip="Ana indirimin üzerine yazar. '0' indirimsiz değil geçersizdir">İndirim</label>         
+                                                    <div class="form-group">
+                                                        <input class="form-control" formControlName="productdiscount" type="text">
+                                                    </div>                        
+                                                </div>
+
+                                                <div class="col-xl-2 col-sm-2">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label" placement="top" ngbTooltip="Ana seçimin üzerine yazar">Stokdışı</label>
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input id="checkbox-substock-{{cid}}" type="checkbox" formControlName="isoutofstocksale" value="1">
+                                                            <label for="checkbox-substock-{{cid}}">Satış</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-1 col-sm-1">   
+                                                    <label class="col-form-label" placement="top" ngbTooltip="Detayda gözükecek desen">Görsel</label>         
+                                                    <div class="form-group">
+                                                        <div class="subimgdiv" [style.background-image]="'url('+ subfeatureimagesModel[ cid ] +')'">
+                                                            <input class="upload" type="file" (change)="readTextureUrl( $event , cid )" />
+                                                        </div>
+                                                        <input formControlName="imagedata" [(ngModel)]="subfeatureimagesModel[ cid ]" type="hidden">
+                                                    </div>                        
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row">
+                    
+                                <div class="col-xl-3 col-sm-3">
+                                    <label class="col-form-label">Yayın Durum</label>
+                                    <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                    <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                                        <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                                        <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                                    </div>
+                                    </div>
+                                </div>
+            
+                            </div>
+
+                        </ng-template>
+                    </ngb-tab>
+                    
+                    <ngb-tab *ngFor="let lang of activeLanguages" title="{{lang.nm}}">
+                      <ng-template ngbTabContent>
+                        <div [formGroupName]="lang.cd">
+                        <div class="row">
+
+                            <div class="col-xl-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="col-form-label">Ürün Başlığı</label>
+                                    <div class="input-group for-multilanguage">
+                                        <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependCatName" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                        <input class="form-control" formControlName="productname" type="text" aria-describedby="inputGroupPrependCatName">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4 col-sm-4">
+  
+                                <div class="form-group">
+                                  <label class="col-form-label">Ürün Kısa Başlığı</label>
+                                  <div class="input-group for-multilanguage">
+                                      <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependCatMin" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                      <input class="form-control" formControlName="productminname" type="text" aria-describedby="inputGroupPrependCatMin">
+                                  </div>
+                                </div>
+            
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                  
+                            <div class="col-xl-8 col-sm-8">
+          
+                                <div class="form-group">
+                                  <label class="col-form-label">Meta Açıklama (arama motorları için)</label>
+                                  <div class="input-group for-multilanguage">
+                                      <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependMetadesc" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                      <input class="form-control" formControlName="metadesc" type="text" aria-describedby="inputGroupPrependMetadesc">
+                                  </div>
+                                </div>
+            
+                            </div>
+
+                            <div class="col-xl-4 col-sm-4">
+            
+                                <div class="form-group">
+                                  <label class="col-form-label">Seo URL (Diğer tüm içeriklerden <u>benzersiz</u>)</label>
+                                  <div class="input-group for-multilanguage">
+                                      <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrependSeourl" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                                      <input class="form-control" formControlName="seourl" type="text" aria-describedby="inputGroupPrependSeourl">
+                                  </div>
+                                </div>
+            
+                          </div>
+                            
+                        </div>
+
+                        <div class="row">
+                  
+                            <div class="col-xl-12 col-sm-12">
+          
+                                <div class="form-group">
+                                  <label class="col-form-label"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i> Özeti (gösterildiği yerdeki diğer içeriklerin uzunluğuna uygun şekilde)</label>
+                                  <div class="input-group">
+                                      <textarea class="form-control" formControlName="summary"></textarea>
+                                  </div>
+                                </div>
+            
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                        <div class="col-xl-12 col-sm-12">
+                            <div class="form-group">
+                              <label class="col-form-label"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i> Açıklama</label>
+                              <app-ngx-editor formControlName="htmlcontent" [config]="editorConfig"></app-ngx-editor>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-xl-12 col-sm-12">
+                                <div class="form-group">
+                                  <label class="col-form-label"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i> Teknik Özellikler</label>
+                                  <app-ngx-editor formControlName="technicalcontent" [config]="editorConfig"></app-ngx-editor>
+                                </div>
+                              </div>
+    
+                            </div>
+                        </div>
+                      </ng-template>
+                    </ngb-tab>
+                    
+                    <ngb-tab title="Görseller" *ngIf="formid !== 'new'">
+                        <ng-template ngbTabContent>
+
+                            <div class="row">
+                  
+                                <div class="col-xl-12 col-sm-12">
+              
+                                    <div *ngIf="imageList.length == 0" class="noimagediv">
+                                        Şuanda hiç görsel yüklenmedi. Yüklenen görseller burada gösterilecektir.
+                                    </div>
+
+                                    <div *ngIf="imageList.length > 0" class="image-gallery">
+
+                                        <div class="row" [dragula]='"bag-one"' [dragulaModel]='imageList'>
+                                            <div class="col-xl-2 col-sm-2" *ngFor="let img of imageList; let ind = index">                                                
+                                                <div class="imggalcontainer {{ mainImageUrl == img ? 'active':'' }}"  [style.backgroundImage]="'url('+ imageBaseUrl + img +')'">
+                                                    <input type="hidden" class="imageinputlist" [value]="img">
+                                                    <input type="hidden" class="imagecolorlist" [ngModelOptions]="{standalone: true}" [(ngModel)]="imageColorModel[ind]"><!-- [value]="imageColorModel[ind] || '' -->
+                                                    <i class="fas fa-times removeimg" (click)="removeImg( img )"></i>
+                                                    <i class="fas fa-check mainimg" (click)="mainImg( img )"></i>
+                                                    <i class="colorimg" *ngIf="imageColorModel[ind]>0" [ngStyle]="{ background: colorsOptionsWithId[ imageColorModel[ind] ].s }" ></i>
+                                                    <div class="colorsbox" *ngIf="colorsOptionsWithId.length>0">
+                                                        <i class="color" *ngFor="let cid of colorsModel" placement="right" ngbTooltip="{{colorsOptionsWithId[cid].n}}">
+                                                            <em [ngStyle]="{ background: colorsOptionsWithId[cid].s }" (click)="changeImageColor(ind,colorsOptionsWithId[cid])"></em>
+                                                        </i>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                
+                                </div>
+    
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 col-xl-3 xl-40 upload-space-sm">
+                                    <div ng2FileDrop [uploader]="uploader" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" class="well my-drop-zone"> Buraya sürükleyebilirsiniz </div>
+                                    <input type="file" ng2FileSelect [uploader]="uploader" multiple />
+                                </div>
+
+                                <div class="col-xl-9 col-md-6 xl-60 upload-table">
+                                    <p>Seçilen dosya sayısı: {{ uploader?.queue?.length }}</p>  
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr><th width="50%">Dosya adı</th><th>Durum</th><th>Aksiyon</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td><strong>{{ item?.file?.name }}</strong></td>
+                                                    <td *ngIf="uploader.isHTML5">
+                                                        <div class="progress mb-0">
+                                                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span *ngIf="item.isSuccess"><i class="fa fa-check-square-o"></i></span>
+                                                        <span *ngIf="item.isError"><i class="fa fa-trash"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button" class="btn btn-success btn-xs mr-1" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"> <span class="fa fa-upload"></span> Yükle </button>
+                                                        <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()"><span class="fa fa-trash"></span> Sil </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <div class="fill-progress">
+                                            Yükleme durumu:
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-success btn-s mr-1" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length"> <span class="fa fa-upload"></span> Tümünü Yükle </button>
+                                        <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"> <span class="fa fa-trash"></span> Tümünü Sil </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </ng-template>
+                    </ngb-tab>
+                    
+                  </ngb-tabset>
+
+                
+                <div class="form-group form-row mt-3 mb-0">
+                    <button class="btn btn-primary mr-2" (click)="submit(userForm.value)" type="submit">Gönder</button>
+                    <button class="btn btn-success mr-2" *ngIf="formid!=='new'" type="button" data-original-title="btn btn-info-gradien" (click)="submitandpreview(userForm.value)" title="">Gönder & Önizle</button>
+                    <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

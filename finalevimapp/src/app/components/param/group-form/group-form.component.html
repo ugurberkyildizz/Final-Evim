@@ -1,0 +1,235 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+  <div class="card">
+
+        <div class="card-header">
+            <h5>Grup Ayarları</h5>
+            <span>Sistemdeki form, filtre, rapor değişkenlerinin grupları tanımlama bölümüdür. <br>
+                Yazılım ekibi tarafından entegre edilmediği sürece sistemde işe yaramamaktadır, bu sebeple destek almadan düzenlemeyiniz.</span>
+        </div>
+
+      <div class="card-body">
+          <form class="theme-form" [formGroup]="userForm">
+
+            <div class="row">
+                
+                <div class="col-xl-4 col-sm-6">
+
+                    <div class="form-group">
+                        <label class="col-form-label">Fonksiyon adı (değiştirmeyin) :
+                        <div *ngIf="userForm.controls.groupcode.touched && userForm.controls.groupcode.errors?.required" class="text text-danger">Text kod giriniz</div>
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text" id="inputFunctionPrepend"><i class="fas fa-robot"></i></span></div>
+                            <input class="form-control" formControlName="groupcode"minLength="2"  type="text" aria-describedby="inputFunctionPrepend">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-form-label">Grup Adı</label>
+                        <div class="input-group for-multilanguage" *ngFor="let lang of activeLanguages">
+                            <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrepend" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                            <input class="form-control" formControlName="groupname_{{lang.cd}}" type="text" required="" aria-describedby="inputGroupPrepend" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group"> 
+                        <label class="col-form-label">Bağlı olduğu grup : </label>
+                        <ng-select [items]="paramGroupOptions" formControlName="parentgroupid" bindValue="i" bindLabel="n"></ng-select>
+                    </div>
+                
+                    <div class="row">      
+                        <div class="col-xl-12 col-sm-12">
+                            <label class="col-form-label">Parametre Grubu Durumu</label>
+                            <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                                <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                                <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xl-8 col-sm-6">
+
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6">
+                            
+                            <div class="form-group">
+                                <label class="col-form-label">Metin Girişi yaptır (Buraya başlık girin) :
+                                <div *ngIf="userForm.controls.stringname1.errors?.minlength" class="text text-danger">string 1</div>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="string1GroupPrepend"><i class="fas fa-keyboard"></i></span></div>
+                                    <input class="form-control" formControlName="stringname1" type="text" placeholder="Örn. Bir renk kodu giriniz" aria-describedby="string1GroupPrepend">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Metin Girişi yaptır (Buraya başlık girin) :
+                                <div *ngIf="userForm.controls.stringname2.errors?.minlength" class="text text-danger">string 2</div>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="string2GroupPrepend"><i class="fas fa-keyboard"></i></span></div>
+                                    <input class="form-control" formControlName="stringname2" type="text" placeholder="Örn. Bir link giriniz" aria-describedby="string2GroupPrepend">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Sayı Girişi yaptır (Buraya başlık girin) :
+                                <div *ngIf="userForm.controls.integername1.errors?.minlength" class="text text-danger">integername1</div>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="integer1GroupPrepend"><i class="far fa-keyboard"></i></span></div>
+                                    <input class="form-control" formControlName="integername1" type="text" placeholder="Örn. Min fiyat giriniz" aria-describedby="integer1GroupPrepend">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Sayı Girişi yaptır (Buraya başlık girin) :
+                                <div *ngIf="userForm.controls.integername2.errors?.minlength" class="text text-danger">integername2</div>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="integer2GroupPrepend"><i class="far fa-keyboard"></i></span></div>
+                                    <input class="form-control" formControlName="integername2" type="text" placeholder="Örn. Maks kişi giriniz" aria-describedby="integer2GroupPrepend">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Şu Gruptan Bir Parametre Seçtir : </label>
+                                <div class="input-group forngselect">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="select1ParamPrepend"><i class="fas fa-mouse-pointer"></i></span></div>
+                                    <ng-select [items]="paramGroupOptions" formControlName="selectparam1" bindValue="i" bindLabel="n" aria-describedby="select1ParamPrepend"></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Şu Gruptan Bir Parametre Seçtir :</label>
+                                <div class="input-group forngselect">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="select2ParamPrepend"><i class="fas fa-mouse-pointer"></i></span></div>
+                                    <ng-select [items]="paramGroupOptions" formControlName="selectparam2" bindValue="i" bindLabel="n" aria-describedby="select2ParamPrepend"></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Şu Gruba Bağlı Bir Grup Seçtir : </label>
+                                <div class="input-group forngselect">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="select1GroupPrepend"><i class="fas fa-mouse-pointer"></i></span></div>
+                                    <ng-select [items]="paramGroupOptions" formControlName="selectgroup1" bindValue="i" bindLabel="n" aria-describedby="select1GroupPrepend"></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Şu Gruba Bağlı Bir Grup Seçtir :</label>
+                                <div class="input-group forngselect">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="select2GroupPrepend"><i class="fas fa-mouse-pointer"></i></span></div>
+                                    <ng-select [items]="paramGroupOptions" formControlName="selectgroup2" bindValue="i" bindLabel="n" aria-describedby="select2GroupPrepend"></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Şu Gruptan Parametreler Seçtir :</label>
+                                <div class="input-group forngselect">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="multi1ParamPrepend"><i class="fas fa-list-ul"></i></span></div>
+                                    <ng-select [items]="paramGroupOptions" formControlName="multiparam1" bindValue="i" bindLabel="n" aria-describedby="multi1ParamPrepend"></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Şu Gruptan Parametreler Seçtir :</label>
+                                <div class="input-group forngselect">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="multi2ParamPrepend"><i class="fas fa-list-ul"></i></span></div>
+                                    <ng-select [items]="paramGroupOptions" formControlName="multiparam2" bindValue="i" bindLabel="n" aria-describedby="multi2ParamPrepend"></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Şu Gruba Bağlı Başka Gruplar Seçtir :</label>
+                                <div class="input-group forngselect">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="multi1GroupPrepend"><i class="fas fa-list-ul"></i></span></div>
+                                    <ng-select [items]="paramGroupOptions" formControlName="multigroup1" bindValue="i" bindLabel="n" aria-describedby="multi1GroupPrepend"></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Şu Gruba Bağlı Başka Gruplar Seçtir :</label>
+                                <div class="input-group forngselect">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="multi2GroupPrepend"><i class="fas fa-list-ul"></i></span></div>
+                                    <ng-select [items]="paramGroupOptions" formControlName="multigroup2" bindValue="i" bindLabel="n" aria-describedby="multi2GroupPrepend"></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">      
+                        <div class="col-xl-3 col-sm-3" *ngFor="let modopt of otherModuleOptions">
+                            <label class="col-form-label">{{modopt.n}}</label>
+                            <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                <div class="radio radio-primary" *ngFor="let opt of moduleStatusOptions">
+                                <input id="modulestatus{{ modopt.i +'_'+ opt.i }}" type="radio" [formControlName]="'module_'+modopt.i" [value]="opt.i"[(ngModel)]="moduleStatusModel[modopt.i]">
+                                <label for="modulestatus{{ modopt.i +'_'+ opt.i }}">{{ opt.n }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                        <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                        <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                        <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                        </div>
+                    </div>
+
+                    <div class="row">      
+                        <div class="col-xl-3 col-sm-3">
+                            <label class="col-form-label">Saff</label>
+                            <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                <div class="radio radio-primary" *ngFor="let opt of moduleStatusOptions">
+                                <input id="modulestatus{{ opt.i }}" type="radio" formControlName="module_pages" [value]="opt.i" [(ngModel)]="moduleStatusModel['pages']">
+                                <label for="modulestatus{{ opt.i }}">{{ opt.n }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+
+            </div>
+            
+            <div class="form-group form-row mt-3 mb-0">
+                <button class="btn btn-primary mr-2" [disabled]="!userForm.valid" (click)="submit(userForm.value)" type="submit">Gönder</button>
+                <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+            </div>
+
+          </form>
+      </div>
+  </div>
+</div>

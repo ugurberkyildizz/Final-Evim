@@ -1,0 +1,55 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    <div class="card">
+        <div class="card-body">
+            <form class="theme-form" [formGroup]="userForm">
+
+                <div class="row">
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Marka Adı
+                                <div *ngIf="userForm.controls.brandname.touched && userForm.controls.brandname.errors?.required" class="text text-danger">isim giriniz</div>
+                            </label>
+                            <input class="form-control" formControlName="brandname" type="text" required="">
+                        </div>
+
+                    </div>
+                   
+                </div>
+                
+                <!-- <div class="row">
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Firma
+                                <div *ngIf="userForm.controls.companyid.touched && userForm.controls.companyid.errors?.required" class="text text-danger">Firma seçiniz</div>
+                            </label>
+                            <ng-select [items]="companyOptions" formControlName="companyid" [(ngModel)]="companyModel" bindValue="i" bindLabel="n" placeholder="Firma Seçiniz" required ></ng-select>
+                        </div>
+
+                    </div>
+
+                </div> -->
+
+                <div class="row">
+
+                    <div class="col-xl-3 col-sm-3">
+                        <label class="col-form-label">Durum</label>
+                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                          <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                            <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                            <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group form-row mt-3 mb-0">
+                    <button class="btn btn-primary mr-2" [disabled]="!userForm.valid" (click)="submit(userForm.value)" type="submit">Gönder</button>
+                    <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

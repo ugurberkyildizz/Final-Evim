@@ -1,0 +1,60 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12">
+        <form [formGroup]="topsearchForm" class="top-search-form">
+          
+    
+              <div class="form-group pocu-mat-date">
+                <input class="form-control" type="text" formControlName="startdate" [(ngModel)]="startdateModel" readonly [matDatepicker]="startdate" >
+                <mat-datepicker-toggle matSuffix [for]="startdate"></mat-datepicker-toggle>
+                <mat-datepicker #startdate></mat-datepicker>
+              </div>
+    
+              <div class="form-group pocu-mat-date">
+                <input class="form-control" type="text" formControlName="finishdate" [(ngModel)]="finishdateModel" readonly [matDatepicker]="finishdate" >
+                <mat-datepicker-toggle matSuffix [for]="finishdate"></mat-datepicker-toggle>
+                <mat-datepicker #finishdate></mat-datepicker>
+              </div>
+    
+              <button class="btn btn-primary" [disabled]="!topsearchForm.valid" (click)="topsearchButton()" type="submit">Ara</button>
+    
+          </form>
+        </div>
+    
+      </div>
+
+  <div class="row">
+      <div class="col-sm-12">
+          <div class="card">
+
+            <ngx-loading [show]="loading" [config]="{backdropBackgroundColour:'rgba(255,255,255,.5)',primaryColour:'#4580d0',secondaryColour:'#2e6fc9',tertiaryColour:'#1d64c5'}"></ngx-loading>
+              
+              <div class="card-body custom-datatable">
+
+                  <input type='text' class="filter-ngx form-control" placeholder='Ara...' (keyup)='updateFilter($event)' />
+                  <!-- <button type="button" class="btn btn-primary" (click)="addLink()"> Sipariş Ekle</button> -->
+                 <!--[reorderable]="reorderable" -->
+                  <ngx-datatable #table class='bootstrap' [scrollbarH]="scrollBarHorizontal" [columnMode]="'force'" [columns]="columns" 
+                      [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [rows]='tabledata'>
+                  </ngx-datatable>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+
+<ng-template #actionButtons let-row="data" let-value="value" ngx-datatable-cell-template>
+    <button md-icon-button (click)="editLink(value)"><i class="fas fa-pencil-alt"></i></button>
+</ng-template>
+
+<ng-template #hdrTpl let-column="column" let-sort="sortFn" >
+    <div (click)="sort()" class="pocusortbutton"><i class="fas fa-arrows-alt-v"></i></div>
+    <div class="inputcontainer"><input type="text" placeholder="{{ column.name }}" (keyup)="updateColFilter($event, column.prop)" /></div>
+</ng-template>
+
+<ng-template #historyMoneyCell let-row="row" let-value="value" let-i="index">
+    {{value | number:'1.2-2'}} ₺
+</ng-template>

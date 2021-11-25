@@ -1,0 +1,127 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    <div class="card">
+        <div class="card-body">
+            <form class="theme-form" [formGroup]="userForm">
+
+                <div class="row">
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Şube Adı
+                                <div *ngIf="userForm.controls.companyname.touched && userForm.controls.companyname.errors?.required" class="text text-danger">isim giriniz</div>
+                                <div *ngIf="userForm.controls.companyname.touched && userForm.controls.companyname.errors?.name" class="text text-danger">Geçersiz isim</div>
+                            </label>
+                            <input class="form-control" formControlName="companyname" type="text" required="">
+                        </div>
+
+                    </div>
+                    <div class="col-xl-6 col-sm-6">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Vergi Bilgisi
+                                <div *ngIf="userForm.controls.taxinfo.touched && userForm.controls.taxinfo.errors?.required" class="text text-danger">vergi daire ve no giriniz</div>
+                            </label>
+                            <input class="form-control" type="text" formControlName="taxinfo" required="">
+                            
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Ülke
+                                <div *ngIf="userForm.controls.country.touched && userForm.controls.country.errors?.required" class="text text-danger">ülke seçiniz</div>
+                            </label>
+                            <ng-select [items]="countryOptions" formControlName="country" [(ngModel)]="countryModel" bindValue="i" bindLabel="n" (change)="onCountrySelected($event)" placeholder="Ülke Seçiniz" required ></ng-select>
+                        </div>
+
+                    </div>
+                    
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Şehir <span *ngIf="cityWait">(Yükleniyor)</span>
+                                <div *ngIf="userForm.controls.city.touched && userForm.controls.city.errors?.required" class="text text-danger">şehir seçiniz</div>
+                            </label>
+                            <ng-select [items]="cityOptions" formControlName="city" [(ngModel)]="cityModel" bindValue="i" bindLabel="n" placeholder="Şehir Seçiniz" required></ng-select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Şube Varsayılan Dil
+                                <div *ngIf="userForm.controls.language.touched && userForm.controls.language.errors?.required" class="text text-danger">Dil seçiniz</div>
+                            </label>
+                            <ng-select [items]="languageOptions" formControlName="language" bindValue="i" bindLabel="n" placeholder="Dil Seçiniz" ></ng-select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xl-3 col-sm-3">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Yazılım
+                                <div *ngIf="userForm.controls.accountingsoftware.touched && userForm.controls.accountingsoftware.errors?.required" class="text text-danger">Muhasebe yazılımını seçiniz</div>
+                            </label>
+                            <ng-select [items]="accountingsoftwareOptions" formControlName="accountingsoftware" [(ngModel)]="accountingsoftwareModel" bindValue="i" bindLabel="n" placeholder="Yazılım Seçiniz" ></ng-select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-3 col-sm-3" *ngIf="accountingsoftwareModel > 0">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Yazılım Bağlantı JSON Dizisi
+                                <div *ngIf="userForm.controls.accountingsoftwarejson.touched && userForm.controls.accountingsoftwarejson.errors?.required" class="text text-danger">Şifre, kullanıcı, id içeren dizi giriniz</div>
+                            </label>
+                            <input class="form-control" type="text" formControlName="accountingsoftwarejson">
+                            
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-3 col-sm-3" *ngIf="accountingsoftwareModel > 0">
+
+                        <div class="form-group">
+                            <label class="col-form-label">Yazılım Bağlantı Yolu
+                                <div *ngIf="userForm.controls.accountingsoftwareurl.touched && userForm.controls.accountingsoftwareurl.errors?.required" class="text text-danger">Veritabanı ya da API Url</div>
+                            </label>
+                            <input class="form-control" type="text" formControlName="accountingsoftwareurl">
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xl-3 col-sm-3">
+                        <label class="col-form-label">Durum</label>
+                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                          <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                            <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                            <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group form-row mt-3 mb-0">
+                    <button class="btn btn-primary mr-2" [disabled]="!userForm.valid" (click)="submit(userForm.value)" type="submit">Gönder</button>
+                    <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

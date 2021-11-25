@@ -1,0 +1,229 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    
+    <div class="card">
+
+        <div class="card-header">
+            <!-- styleSheetFile="assets/css/printcss.css" -->
+            <!-- <button type="button" [useExistingCss]="true" printTitle="Sipariş Formu {{orderValues.orderdate}}" class="btn btn-primary header-right" printSectionId="print-section" ngxPrint><i class="fas fa-print"></i></button> -->
+
+            <button type="button" class="btn btn-primary header-right" (click)="printDocument()"><i class="fas fa-print"></i></button>
+
+            <h5>Sipariş Formu</h5>
+            <span>Vergiyi, İndirim miktarını, Ürünleri vs değiştirebilirsiniz fakat zorunlu olmadıkça ticaret şekli değiştiği için önerilmez</span>
+            
+          </div>
+
+        <div class="card-body" id="print-section">
+
+            <form class="theme-form" [formGroup]="userForm">
+
+                <div class="row">
+
+                    <div class="col-xl-4 col-sm-4 form-left">
+                        
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Sipariş Tarihi</h6></div>
+                            <div class="col-xl-8 col-sm-8">{{orderValues.orderdate}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Sipariş Detayı</h6></div>
+                            <div class="col-xl-8 col-sm-8 detailprices">
+                                <span>+ {{orderValues.subtotal | number:'1.2-2'}}₺ <sup>top</sup></span>
+                                <span *ngIf="orderValues.discounttotal > 0">- {{orderValues.discounttotal | number:'1.2-2'}}₺ <sup>ind</sup></span>
+                                <span *ngIf="orderValues.subtax > 0">+ {{orderValues.subtax | number:'1.2-2'}}₺ <sup>tax</sup></span>
+                                <span *ngIf="orderValues.additionaldiscount > 0 || orderValues.additionaldiscount < 0">{{orderValues.additionaldiscount > 0 ? '+ ':'- '}} {{math.abs(orderValues.additionaldiscount) | number:'1.2-2'}}₺ <sup>ek</sup></span>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-2">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Sipariş Toplamı</h6></div>
+                            <div class="col-xl-8 col-sm-8"><b>{{orderValues.carttotal | number:'1.2-2'}}</b>₺</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Firma Adı</h6></div>
+                            <div class="col-xl-8 col-sm-8">{{orderValues.companyname}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Firma Cari Kodu</h6></div>
+                            <div class="col-xl-8 col-sm-8">{{orderValues.accountcode}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Siparişi Veren</h6></div>
+                            <div class="col-xl-8 col-sm-8">{{orderValues.name }} {{ orderValues.surname}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Kişi İletişim</h6></div>
+                            <div class="col-xl-8 col-sm-8">{{orderValues.userphone }} , {{ orderValues.useremail}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Sipariş Adresi</h6></div>
+                            <div class="col-xl-8 col-sm-8">{{ addressView.countryname_view }} , {{ addressView.cityname_view }} , {{ addressView.addressdetail }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-4 txt-primary"><h6>Adres İletişim</h6></div>
+                            <div class="col-xl-8 col-sm-8">{{ addressView.addressphone }} , {{ addressView.addressemail }}</div>
+                        </div>
+
+                        
+
+                        <div class="row hide-on-print">
+                                        
+                            <div class="col-xl-12 col-sm-12">
+        
+                                <div class="form-group">
+                                    <label class="col-form-label">Sipariş Adresini Değiştir</label>
+                                    <ng-select [items]="addressOptions" formControlName="cartaddressid" [(ngModel)]="addressModel" bindValue="i" bindLabel="n" placeholder="Adres" required ></ng-select>
+                                </div>
+        
+                            </div>
+
+                            <div class="col-xl-12 col-sm-12">
+        
+                                <div class="form-group">
+                                    <label class="col-form-label">Son Sipariş Durumu</label>
+                                    <ng-select [items]="orderStatusOptions" formControlName="lastorderstatus" bindValue="i" bindLabel="n" placeholder="Sipariş Durumu"></ng-select>
+                                </div>
+        
+                            </div>
+
+                        </div>
+
+                        <div class="row  hide-on-print">
+                            
+                            <div class="col-xl-5 col-sm-5">
+                                <div class="form-group">
+                                    <label class="col-form-label">Özel Ek Fiyat ± <i class="fas fa-question-circle" ngbTooltip="Müşterinin iskontosu sitede hesaplanıp buraya eklenir. Bu sayfada sepet adetleri değiştirilirse bu oran elle hesaplanıp buraya yazılmalıdır. Çünkü öncesinde elle değişmiş olma ihtimali sebebiyle otomatik hesaplama hataya sebep olabilir."></i></label>
+                                    <input class="form-control" formControlName="additionaldiscount" type="number" >
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-8 col-sm-8  form-right">
+                       
+                        <div class="row div-product-color-match">
+                            <div class="col-xl-12 col-sm-12">
+                                <table class="table-product-color-match">
+                                    <thead>
+                                        <th>ÖZET</th>
+                                        <th *ngFor="let color of cartAllColors">{{ color }}</th>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let pcode of cartAllProductCodes">
+                                            <th>{{ pcode }}</th>
+                                            <td *ngFor="let color of cartAllColors" style="text-align: center;">
+                                                <ng-container *ngFor="let prod of cartProducts">
+                                                    <ng-container *ngIf="pcode == prod.productcode">
+                                                        {{ color == prod.colorname_view ? prod.featurequantity : '' }}
+                                                    </ng-container>
+                                                </ng-container>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="col-xl-12 col-sm-12">
+
+                                <table class="table table-bordernone product-list">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Temsil</th>
+                                        <th scope="col">Ürün</th>
+                                        <th scope="col">Renk</th>
+                                        <th scope="col">Seri</th>
+                                        <th scope="col">Adet</th>
+                                        <th scope="col">Fiyat</th>
+                                        <th scope="col">Toplam</th>
+                                        <th scope="col">Vergi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let prod of cartProducts">
+                                            <td><img class="img-fluid img-60" src="{{ imageBaseUrl + prod.mainimage }}"></td>
+                                            <td>{{prod.productcode}}<br>{{prod.productname}}</td>
+                                            <td><img [src]="prod.imagedata" class="colorimg"><br><span class="colorname">{{prod.colorname_view}}</span></td>
+                                            <td class="lothtml" [innerHTML]="prod.lothtml"></td>
+                                            <td>
+                                                <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="productQtyModel[ prod.cartrowid ]" type="number">
+                                                <b class="removeitem" (click)="removeFromCart( prod.cartrowid )">Sil</b>
+                                                
+                                            </td>
+                                            <td>{{ prod.piecefinalprice | number:'1.2-2'}}₺ <span class="rowpiecediscount" *ngIf="prod.piecediscount > 0">(-{{prod.piecediscount}}₺ indirimli)</span></td>
+                                            <td>{{ prod.totalfinalprice  | number:'1.2-2'}}₺</td>
+                                            <td><ng-select [items]="taxOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="taxModel[ prod.cartrowid ]" bindValue="i" bindLabel="n" placeholder="Vergi" ></ng-select></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row  hide-on-print">
+                            
+                            <div class="col-xl-12 col-sm-12 mt-3 text-center" *ngIf="productOptions.length == 0">
+                                <button class="btn btn-secondary" (click)="getProductsForAdd()" type="button"><i class="fas fa-sync"></i> Ürün Ekle</button>
+                            </div>
+
+                            <div class="col-xl-4 col-sm-4 mt-3" *ngIf="productOptions.length > 0">
+                                <div class="form-group">
+                                    <label class="col-form-label">Yeni Ürün Ekle</label>
+                                    <ng-select [items]="productOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="newproductModel" (change)="newProductListChange( $event )" bindValue="i" bindLabel="n" placeholder="Yeni Ürün Seçiniz" ></ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-8 col-sm-8 mt-3" *ngIf="productOptions.length > 0">
+                                <div class="form-group">
+                                    <label class="col-form-label">Ürün Özelliği</label>
+                                    <ng-select [items]="productFeatOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="newproductfeatModel" (change)="newProductFeatChange( $event )" bindValue="i" bindLabel="n" placeholder="Ürün Özelliği Seçiniz" ></ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-12 col-sm-12 mt-3 text-center" *ngIf="productOptions.length > 0">
+                                <button class="btn btn-secondary" type="button" (click)="addProductsToCart()"><i class="fas fa-plus"></i> Ürünü Ekle</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row  hide-on-print"><div class="col-sm-12">&nbsp;</div></div>
+
+                <div class="row  hide-on-print">
+
+                    <div class="col-xl-3 col-sm-3">
+                        <label class="col-form-label">Durum <i class="fas fa-question-circle" ngbTooltip="Aktifleşmediği sürece müşteri tarafından değiştirilebilir. Aktifse sadece panelden değişebilir."></i></label>
+                        <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                          <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                            <input id="status{{ opt.i }}" type="radio" formControlName="approvalstatus" [value]="opt.i" [(ngModel)]="statusModel">
+                            <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group form-row mt-3 mb-0  hide-on-print">
+                    <button class="btn btn-primary mr-2" [disabled]="!userForm.valid" (click)="submit(userForm.value)" type="submit">Güncelle</button>
+                    <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

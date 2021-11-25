@@ -1,0 +1,267 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+    
+    <section class="bid-details-section">
+    <div class="card">
+        <div class="card-header">
+            <!-- styleSheetFile="assets/css/printcss.css" -->
+            <!-- <button type="button" [useExistingCss]="true" printTitle="Sipariş Formu {{orderValues.orderdate}}" class="btn btn-primary header-right" printSectionId="print-section" ngxPrint><i class="fas fa-print"></i></button> -->
+
+            <button type="button" class="btn btn-primary header-right" (click)="printDocument()"><i class="fas fa-print"></i></button>
+
+            <h5>TEKLİF Detayları</h5>
+            <span>Teklif formunda girmiş olduğunuz detaylara göre oluşturulmuştur.</span>
+            
+        </div>
+        <div class="card-body">
+            <div class="bid-details">
+                <div class="row" id="header">
+                    <div class="col-5" id="proposalplanheader">
+                        <h4>Ödeme Planı Teklifi</h4>
+                    </div>
+                    <div class="col-2" >
+                    </div> 
+                    <div class="col-2" >
+                       
+                   </div>  
+                    <div class="col-3" id="logo">
+                        <img src="assets/image/final-evim-logo.png" height="50" >  
+                    </div>  
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p class="headerowner">Müşteri Adı Soyadı <span class="nokta">:</span><span class="headerownerresult">{{ bidvalues['customername'] }} </span></p>
+                        <p class="headertype">Final Model Türü <span class="nokta">:</span><span class="headertyperesult">{{ bidvalues['calistype'] }} </span></p>
+                        <p class="headermanager">Final Modeli <span class="nokta">:</span><span class="headermanagerresult">{{ this.bidvalues['calisname'] }}  </span></p>
+                        <p class="headerdeliverydate">Teslim Tarihi <span class="nokta">:</span><span class="headerdeliverydateresult">{{ this.bidvalues['deliverydate'] }}  </span></p>
+                        <p class="headerdate">Teklif Tarihi <span class="nokta">:</span><span class="headerdateresult">{{ orderdates }}  </span></p>
+                        
+                    </div> 
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-3">
+                        <img src="assets/image/finalevim-kampanya.png" class="kampanyaimg" width="190" height="190" > 
+                    </div>  
+                </div>
+                <div class="row" id="details">
+                    <div class="col-3" id="offerdetail">
+                        <h6>Teklif Detayları</h6>
+                    </div>  
+                    <div class="col-3">
+
+                    </div> 
+                    <div class="col-6" id="periodvalidity">
+                        <h6>Teklifin Geçerlilik Tarih: {{ offervalidityperiod }}</h6> 
+                    </div>   
+                </div>
+                <div class="row">
+                    <div class="col-4" id="offerdetailoptions">
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p>Grup Sayısı</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p>Tasarruf Tutarı</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p>Teslim Aralığı</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p>Çalışma Bedeli Tutarı</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p>İlk Taksit</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p>Peşinat</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p> Toplam İlk Ödeme Tutarı:</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p> Toplam Maliyet:</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptions">
+                            <div class="col-12">
+                                <p> Taksit Bitiş Tarihi:</p>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="col-8" id="offerdetailoptionsresult">
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12">
+                                <p>{{bidvalues['numberofgroups'] | number:'1.0-2'}}</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12">
+                                <p>{{bidvalues['campaignprice'] | number:'1.0-2'}} ₺</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12">
+                                <p>{{ bidvalues['deliveryperiod'] }}</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12" *ngIf="bidvalues['workingfee'] ==  bidvalues['discountedworkingfee']" >
+                                <p>{{ bidvalues['discountedworkingfee'] | number:'1.0-2'}} ₺</p>
+                            </div>
+                            <div class="col-12" *ngIf="bidvalues['workingfee'] !==  bidvalues['discountedworkingfee']">
+                                <p> <span class="oteleme">{{bidvalues['workingfee'] | number:'1.0-2'}} ₺</span><!--  *ngIf="{{bidvalues['workingfee']}} == {{ bidvalues['discountedworkingfee']}}"  --><span class="campaignpricearrow">Kampanya<em></em></span> <span class="campaignformend">{{ bidvalues['discountedworkingfee'] | number:'1.0-2'}} ₺</span></p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12">
+                                <p>{{bidvalues['firstinstallment']  | number:'1.0-2'}} ₺</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12">
+                                <p>{{bidvalues['downpaymentamount'] | number:'1.0-2'}} ₺</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12">
+                                <p>{{bidvalues['firstmonthtotalpayment'] | number:'1.0-2'}} ₺</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12">
+                                <p>{{bidvalues['totalcost'] | number:'1.0-2'}} ₺</p>
+                            </div>
+                        </div>
+                        <div class="row offerdetailoptionsresult">
+                            <div class="col-12">
+                                <p>{{bidvalues['installmentfinishmonth'] }} </p>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+                <div class="row">
+                    <div class="col-3" id="termssavingoffers">
+                    <p> ÖDEME PLANI KOŞULLARI </p>
+                    </div>
+                    <div class="col-12" id="termssavingoffersoptions">
+                        <p><i class="fas fa-dot-circle"></i> Teklifiniz bu formda yer alan “Teklifin Geçerlilik Süresi” sonuna kadar geçerlidir.</p>
+                        <p><i class="fas fa-dot-circle"></i> Farklı ödeme talepleriniz olması durumunda, satış uzmanınız size özel farklı bir ödeme planı teklifi çalışarak yeni bir teklif sunacaktır. </p>
+                        <p><i class="fas fa-dot-circle"></i> Şubelerimizden nakit tahsilat kabul edilmemekte olup tüm ödemeler bankalar aracılığı ile gerçekleştirilmektedir.</p>
+                        <p><i class="fas fa-dot-circle"></i> Finalevim, size sunulan ödeme planı teklif koşullarında değişiklik yapma hakkını saklı tutar.</p>
+                        <p><i class="fas fa-dot-circle"></i> Dahil olacağınız ödeme planı kapsamında imzalayacağınız sözleşmede yer alacak dar ve yasal masraflar bu ödeme plan teklifine dahil edilmemiştir. </p>
+                    </div>
+                </div>
+                <!-- <div class="row"> 
+                    <div class="col-12 col">
+                        <div class="row" id="information">
+                            <div class="col-1"><i class="fas fa-exclamation" id="exclamation"></i></div>
+                            <div class="col-9"><p class="informationtext">Finalevim’i tanıdıklarına tavsiye eden tasarruf sahipleri referans oldukları tasarruf sahiplerinin kayıt oldukları proje bedelleri üzerinden hesaplanan oranlar ile mevcut teslim tarihlerini daha erkene çekme fırsatı yakalıyor. </p></div>
+                            <div class="col-2"><img src="assets/image/finalevimqrcode.png" class="informationqrcode" width="60px" height="60px" ></div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="row" id="notices">
+                    <div class="col-1" id="noticeicon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="col-11" id="notice">
+                        <p class="noticep">Sadece ağustosta <span style="font-weight: bold; padding: 3px; border-radius: 3px; color: #333333; background: #f6e6b4; background: -moz-linear-gradient(left,  #f6e6b4 0%, #ed9017 100%); background: -webkit-linear-gradient(left,  #f6e6b4 0%,#ed9017 100%); background: linear-gradient(to right,  #f6e6b4 0%,#ed9017 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6e6b4', endColorstr='#ed9017',GradientType=1 );">1823</span>  Teslimat</p>
+                        <p class="noticeinformation">92 şubemiz ve 1199 çalışanımız ile hayallerinize kavuşmaya vesile olmaktan gurur duyuyoruz.</p>
+                    </div>
+                </div> -->
+                <div class="row" id="agent">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="expertagent">Satış Uzmanınız</p>
+                            </div> 
+                        </div>
+                        <div class="row" id="tableexpertagent">
+                            <div class="col-4" >
+                                <p class="expertname"  >{{bidvalues['userfullname']}} </p>
+                            </div>
+                            <div class="col-4" id="tableexpertagentspace">
+                                <p class="expertname" >{{ bidvalues['phone'] }} </p>
+                            </div>
+                            <div class="col-4" id="tableexpertagentspaces">
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="adress">
+                                <p class="adress">{{ bidvalues['insertcompanyid'] ? companyOptions[ bidvalues['insertcompanyid'] ] : '' }}</p>
+                            </div>
+                        </div>  
+                    </div>     
+                </div>
+                <div class="row footerpdf">
+                    <div class="col-3" id="footertext">
+                        <p class="footertextarea"> <span class="footertext">Final'de</span> Ev var</p> <!-- büyüyecek -->
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-3">
+                        
+                    </div>
+                    <div class="col-3" id="footerlogo">
+                        <p class="footerlogotext"> FinalEvim </p>
+                    </div>
+                </div>
+
+
+                    
+                <!-- <div class="row">
+                    <div class="col-3" style="background:#f22;">Çalışma Türü</div>
+                    <div class="col-3">{{ bidvalues['calistype'] }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-6" style="background:#ff0;">Çalışma Adı</div>
+                    <div class="col-6">{{ bidvalues['calisname'] }}</div> 
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+
+    </section>
+
+    <!-- <div class="page-break"></div> -->
+    <section class="bid-table-section">
+    <div class="card">
+        <div class="card-body">
+
+            <div class="bid-detailss">
+                <div class="row">
+                    <div class="col-12">
+                        <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [columns]="columns" [selected]="tableselected"  
+                            [headerHeight]="50" [footerHeight]="0" [rowHeight]="'auto'" [limit]="1000" [rows]='tabledata'>
+                        </ngx-datatable>
+                        <ng-template #dodeme let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{value | number:'1.0-2'}} ₺
+                        </ng-template> 
+                        <ng-template #todeme let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{value | number:'1.0-2'}} ₺
+                        </ng-template> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+</div>

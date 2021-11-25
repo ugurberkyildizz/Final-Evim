@@ -1,0 +1,163 @@
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+  <div class="card">
+
+      <div class="card-header">
+        <h5>Parametre Ayarları</h5>
+        <span>Sistemdeki form, filtre, rapor vs. için değişken listelerin tanımlama bölümüdür. <br>
+            Yazılım ekibi tarafından entegre edilmediği sürece sistemde işe yaramamaktadır, bu sebeple destek almadan düzenlemeyiniz.</span>
+      </div>
+
+      <div class="card-body">
+          <form class="theme-form" [formGroup]="userForm">
+
+            <div class="row">
+                
+                <div class="col-xl-4 col-sm-6">
+
+                  
+                    <div class="form-group"> 
+                        <label class="col-form-label">Bağlı olduğu grup : </label>
+                        <ng-select [items]="paramGroupOptions" formControlName="parametergroup" bindValue="i" bindLabel="n" [(ngModel)]="parameterGroupModel" (change)="onGroupSelected()" placeholder="Grup Seçiniz" ></ng-select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-form-label">Parametre Adı</label>
+                        <div class="input-group for-multilanguage" *ngFor="let lang of activeLanguages">
+                            <div class="input-group-prepend"><span class="input-group-text" id="inputGroupPrepend" title="{{lang.sf}}"><i class="flag-icon flag-icon-{{lang.cd=='en'?'gb':lang.cd}}"></i></span></div>
+                            <input class="form-control" formControlName="paramname_{{lang.cd}}" type="text" required="" aria-describedby="inputGroupPrepend" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">      
+                        <div class="col-xl-12 col-sm-12">
+                            <label class="col-form-label">Parametre Yayın Durumu</label>
+                            <div class="form-group m-t-10 m-checkbox-inline mb-0 custom-radio-ml">
+                                <div class="radio radio-primary" *ngFor="let opt of statusOptions">
+                                <input id="status{{ opt.i }}" type="radio" formControlName="status" [value]="opt.i" [(ngModel)]="statusModel">
+                                <label for="status{{ opt.i }}">{{ opt.n }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xl-8 col-sm-6">
+
+                    <div class="row" *ngIf="paramGroupDetail.stringname1 || paramGroupDetail.stringname2">
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.stringname1">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.stringname1}} : <div *ngIf="this.stringval1iscolor" class="colorinfo" [ngStyle]="{background: this.stringval1iscolor}"></div></label>
+                                <input class="form-control" type="text" formControlName="stringval1" [(ngModel)]="stringval1Model" (change)="onStringVal1Change()">                    
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.stringname2">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.stringname2}} :</label>
+                                <input class="form-control" type="text" formControlName="stringval2">                    
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="row" *ngIf="paramGroupDetail.integername1 || paramGroupDetail.integername2">
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.integername1">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.integername1}} : </label>
+                                <input class="form-control" type="text" formControlName="integerval1">                    
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.integername2">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.integername2}} : </label>
+                                <input class="form-control" type="text" formControlName="integerval2">                    
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="paramGroupDetail.selectparam1 || paramGroupDetail.selectparam2">
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.selectparam1">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.selectparam1gn}} : </label>
+                                <ng-select [items]="selectval1Options" formControlName="selectval1" bindValue="i" bindLabel="n"></ng-select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.selectparam2">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.selectparam2gn}} :</label>
+                                <ng-select [items]="selectval2Options" formControlName="selectval2" bindValue="i" bindLabel="n"></ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="paramGroupDetail.multiparam1 || paramGroupDetail.multiparam2">
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.multiparam1">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.multiparam1gn}}:</label>
+                                <ng-select [items]="multival1Options" multiple="true" formControlName="multival1" bindValue="i" bindLabel="n"></ng-select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.multiparam2">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.multiparam2gn}} :</label>
+                                <ng-select [items]="multival2Options" multiple="true" formControlName="multival2" bindValue="i" bindLabel="n"></ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="paramGroupDetail.selectgroup1 || paramGroupDetail.selectgroup2">
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.selectgroup1">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.selectgroup1gn}} : </label>
+                                <ng-select [items]="groupval1Options" formControlName="selectgroupval1" bindValue="i" bindLabel="n"></ng-select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.selectgroup2">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.selectgroup2gn}} :</label>
+                                <ng-select [items]="groupval2Options" formControlName="selectgroupval2" bindValue="i" bindLabel="n"></ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="paramGroupDetail.multigroup1 || paramGroupDetail.multigroup2">
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.multigroup1">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.multigroup1gn}} :</label>
+                                <ng-select [items]="multigroupval1Options" multiple="true" formControlName="multigroupval1" bindValue="i" bindLabel="n"></ng-select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6" *ngIf="paramGroupDetail.multigroup2">
+                            <div class="form-group">
+                                <label class="col-form-label">{{paramGroupDetail.multigroup2gn}} :</label>
+                                <ng-select [items]="multigroupval2Options" multiple="true" formControlName="multigroupval2" bindValue="i" bindLabel="n"></ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" *ngIf="otherModuleView">
+                        <ng-container *ngFor="let opt of otherModuleOptions">
+                            <div class="col-xl-6 col-sm-6" *ngIf="otherModuleDataOptions[opt.i]">
+                                <div class="form-group">
+                                    <label class="col-form-label">{{opt.n}} Linki (ya da) :</label>
+                                    <ng-select [items]="otherModuleDataOptions[opt.i]" formControlName="module_{{opt.v}}val" bindValue="i" bindLabel="n"></ng-select>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-group form-row mt-3 mb-0">
+                <button class="btn btn-primary mr-2" [disabled]="!userForm.valid" (click)="submit(userForm.value)" type="submit">Gönder</button>
+                <button class="btn btn-warning" type="button" data-original-title="btn btn-info-gradien" (click)="cancel()" title="">Vazgeç</button>
+            </div>
+
+          </form>
+      </div>
+  </div>
+</div>

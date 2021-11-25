@@ -1,0 +1,103 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="row product-page-main" *ngIf="product">
+            <div class="col-xl-4">
+                <section>
+                    <ks-carousel [id]="100" [images]="imagesRect" [dotsConfig]="{visible: false}"
+                        [carouselConfig]="{maxHeight: '600px', keyboardEnable: true}"
+                        [previewConfig]="{maxHeight: '125px'}">
+                    </ks-carousel>
+                </section>
+            </div>
+            <div class="col-xl-8">
+                <div class="product-page-details">
+                    <h5>{{product.productname}}</h5>
+                </div>
+                <hr>
+                <p>{{product.summary}}</p>
+                <div class="product-price digits" *ngIf="product.productdiscount > 0">
+                    <del>{{ product.productprice }} TL</del>{{ product.productprice - product.productdiscount }} TL
+                </div>
+                <div class="product-price digits" *ngIf="!product.productdiscount > 0">
+                    {{ product.productprice }} TL
+                </div>
+                <hr>
+                <div>
+                    <table class="product-page-width">
+                        <tbody>
+                            <tr>
+                                <td><b>Marka : </b>{{product.brandname}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Stok Adedi: </b>{{product.productstock}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <ul class="product-color m-t-15">
+                    <!-- <li class="bg-primary" *ngFor="let c of colorsOptions" style="background-color:rgb(c.)"></li> -->
+                </ul>
+                <div class="m-t-15">
+                    <button class="btn btn-primary-gradien m-r-10 m-l-10" type="button"
+                        data-original-title="btn btn-info-gradien" [routerLink]="['/product/products']" title="">
+                        Listeye Dön</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="row product-page-main" *ngIf="product">
+            <div class="col-sm-12">
+
+                <ngb-tabset>
+
+                    <ngb-tab title="Açıklama">
+                        <ng-template ngbTabContent>
+                            
+                            <div [innerHTML]="product.htmlcontent"></div>
+
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab title="Teknik Özellikler">
+                        <ng-template ngbTabContent>
+                            <div [innerHTML]="product.technicalcontent"></div>
+                        </ng-template>
+                    </ngb-tab>
+
+                </ngb-tabset>
+
+                <!-- <ul class="nav nav-tabs nav-material mb-0" id="top-tab" role="tablist">
+                    <li class="nav-item"><a class="nav-link" [ngClass]="{'active': type == 'Febric'}" id="top-home-tab"
+                            data-toggle="tab" (click)="getOption(type = 'Febric')" role="tab" aria-controls="top-home"
+                            aria-selected="false">Febric</a>
+                        <div class="material-border"></div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" [ngClass]="{'active': type == 'Video'}"
+                            id="profile-top-tab" data-toggle="tab" (click)="getOption(type = 'Video')" role="tab"
+                            aria-controls="top-profile" aria-selected="false">Video</a>
+                        <div class="material-border"></div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" [ngClass]="{'active': type == 'Details'}"
+                            id="contact-top-tab" data-toggle="tab" (click)="getOption(type = 'Details')" role="tab"
+                            aria-controls="top-contact" aria-selected="true">Details</a>
+                        <div class="material-border"></div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" [ngClass]="{'active': type == 'Brand'}" id="brand-top-tab"
+                            data-toggle="tab" (click)="getOption(type = 'Brand')" role="tab" aria-controls="top-brand"
+                            aria-selected="true">Brand</a>
+                        <div class="material-border"></div>
+                    </li>
+                </ul>
+                <div class="tab-content" id="top-tabContent" *ngFor="let item of contents">
+                    <div class="tab-pane fade active show" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
+                        <p class="mb-0 m-t-20">{{item.content_1}}</p>
+                        <p class="mb-0 m-t-20">{{item.content_2}}"</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
